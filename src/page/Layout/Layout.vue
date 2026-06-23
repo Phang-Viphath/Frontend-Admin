@@ -408,15 +408,15 @@ const currentPageTitle = computed(() => {
 })
 
 // ==================== NOTIFICATIONS LOGIC ====================
-const fetchNotifications = async () => {
-  isLoadingNotifications.value = true
+const fetchNotifications = async (silent = false) => {
+  if (!silent) isLoadingNotifications.value = true
   try {
     const data = await request('/notifications', 'GET')
     notifications.value = Array.isArray(data) ? data : []
   } catch (err) {
     console.warn('Failed to fetch notifications:', err)
   } finally {
-    isLoadingNotifications.value = false
+    if (!silent) isLoadingNotifications.value = false
   }
 }
 
@@ -698,10 +698,17 @@ onMounted(() => {
     now.value = new Date()
   }, 60000)
 
+  // Live Sync Notifications via polling
+  fetchNotifications(true) // Initial fetch
+  const syncTimer = setInterval(() => {
+    fetchNotifications(true)
+  }, 10000)
+
   document.addEventListener('click', handleClickOutside)
 
   return () => {
     clearInterval(timer)
+    clearInterval(syncTimer)
     document.removeEventListener('click', handleClickOutside)
   }
 })
