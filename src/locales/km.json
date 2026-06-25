@@ -469,7 +469,7 @@
   "failed_to_load_data": "បរាជ័យក្នុងការទាញយកទិន្នន័យ។ សូមព្យាយាមម្តងទៀត។",
   "try_again": "ព្យាយាមម្តងទៀត",
   "loading": "កំពុងផ្ទុក...",
-  "email_placeholder": "your@email.com",
+  "email_placeholder": "your{'@'}email.com",
   "name_placeholder": "ឈ្មោះរបស់អ្នក",
   "phone_placeholder": "+855 12 345 678",
   "address_placeholder": "ភ្នំពេញ, កម្ពុជា",
