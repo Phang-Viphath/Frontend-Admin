@@ -8,7 +8,6 @@
           <span class="material-symbols-outlined animate-spin text-base">progress_activity</span>
           {{ $t('refreshing') }}
         </span>
-        <p v-else class="text-sm text-gray-500 dark:text-gray-400">{{ $t('last_updated') }} {{ lastUpdatedLabel }}</p>
         <div class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
           <span class="relative flex h-2 w-2">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -256,11 +255,6 @@ const lastUpdated = ref(null)
 const kpis = ref({ occupancy_rate: 0, adr: 0, revpar: 0, total_revenue: 0 })
 const reservations = ref([])
 const rooms = ref([])
-
-// ── Computed ────────────────────────────────────────────────
-const lastUpdatedLabel = computed(() =>
-  lastUpdated.value ? lastUpdated.value.toLocaleString() : '—'
-)
 
 const mapReservation = r => ({
   id: r.id,

@@ -55,7 +55,6 @@
   "integrations_desc": "Connect third-party services like payment gateways, channel managers, or booking engines.",
   "connect": "Connect",
   "refreshing": "Refreshing...",
-  "last_updated": "Last updated:",
   "live_sync": "Live Sync",
   "total_revenue": "Total Revenue",
   "based_on_reservations": "Based on reservations in selected period",
