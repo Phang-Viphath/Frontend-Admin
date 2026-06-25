@@ -4,7 +4,7 @@
       <div class="p-6">
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">
-            {{ editingRoom ? 'Edit Room' : 'Add New Room' }}
+            {{ editingRoom ? $t('edit_room') : $t('add_new_room') }}
           </h2>
           <button
             @click="close"
@@ -18,7 +18,7 @@
         <form @submit.prevent="save" class="space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Room Number *</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('room_number') }} *</label>
               <input
                 v-model="form.number"
                 type="text"
@@ -29,41 +29,41 @@
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Room Type *</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('room_type') }} *</label>
               <select
                 v-model="form.type"
                 required
                 :disabled="isSaving"
                 class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2d3b4e] focus:ring-2 focus:ring-blue-500 outline-none disabled:opacity-60"
               >
-                <option value="">Select Type</option>
-                <option value="Standard">Standard</option>
-                <option value="Deluxe">Deluxe</option>
-                <option value="Suite">Suite</option>
-                <option value="Family">Family</option>
-                <option value="Executive">Executive</option>
+                <option value="">{{ $t('select_type') }}</option>
+                <option value="Standard">{{ $t('standard') }}</option>
+                <option value="Deluxe">{{ $t('deluxe') }}</option>
+                <option value="Suite">{{ $t('suite') }}</option>
+                <option value="Family">{{ $t('family') }}</option>
+                <option value="Executive">{{ $t('executive') }}</option>
               </select>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Floor *</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('floor') }} *</label>
               <select
                 v-model="form.floor"
                 required
                 :disabled="isSaving"
                 class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2d3b4e] focus:ring-2 focus:ring-blue-500 outline-none disabled:opacity-60"
               >
-                <option value="">Select Floor</option>
-                <option value="1st Floor">Floor 1</option>
-                <option value="2nd Floor">Floor 2</option>
-                <option value="3rd Floor">Floor 3</option>
-                <option value="4th Floor">Floor 4</option>
-                <option value="5th Floor">Floor 5</option>
+                <option value="">{{ $t('select_floor') }}</option>
+                <option value="1st Floor">{{ $t('floor_n', { n: 1 }) }}</option>
+                <option value="2nd Floor">{{ $t('floor_n', { n: 2 }) }}</option>
+                <option value="3rd Floor">{{ $t('floor_n', { n: 3 }) }}</option>
+                <option value="4th Floor">{{ $t('floor_n', { n: 4 }) }}</option>
+                <option value="5th Floor">{{ $t('floor_n', { n: 5 }) }}</option>
               </select>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Capacity *</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('capacity') }} *</label>
               <input
                 v-model.number="form.capacity"
                 type="number"
@@ -75,7 +75,7 @@
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Price per night ($) *</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('price_per_night') }} *</label>
               <input
                 v-model.number="form.price"
                 type="number"
@@ -88,23 +88,23 @@
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status *</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('status_header') }} *</label>
               <select
                 v-model="form.status"
                 required
                 :disabled="isSaving"
                 class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2d3b4e] focus:ring-2 focus:ring-blue-500 outline-none disabled:opacity-60"
               >
-                <option value="available">Available</option>
-                <option value="occupied">Occupied</option>
-                <option value="cleaning">Cleaning</option>
-                <option value="maintenance">Maintenance</option>
+                <option value="available">{{ $t('available') }}</option>
+                <option value="occupied">{{ $t('occupied') }}</option>
+                <option value="cleaning">{{ $t('cleaning') }}</option>
+                <option value="maintenance">{{ $t('maintenance') }}</option>
               </select>
             </div>
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Room Image</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('room_image') }}</label>
             <div class="flex items-center justify-between">
               <div class="h-24 w-32 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center border dark:border-gray-600">
                 <img v-if="previewImage" :src="previewImage" alt="Preview" class="h-full w-full object-cover" />
@@ -120,7 +120,7 @@
                   class="block w-full text-sm text-slate-300 file:mr-4 file:rounded-full file:border-0 file:bg-[#218447] file:px-4 file:py-2 file:text-sm file:font-bold file:text-[#122118] hover:file:bg-[#2bc466] disabled:opacity-60"
                 />
               </div>
-              <p class="text-xs text-gray-500 mt-1">Max size: 2MB (JPG, PNG, GIF)</p>
+              <p class="text-xs text-gray-500 mt-1">{{ $t('max_size_2mb') }}</p>
             </div>
           </div>
 
@@ -131,7 +131,7 @@
               :disabled="isSaving"
               class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Cancel
+              {{ $t('cancel') }}
             </button>
             <button
               type="submit"
@@ -139,7 +139,7 @@
               class="px-4 py-2 bg-[green] text-white rounded-lg hover:bg-[green]/90 disabled:opacity-50 transition flex items-center gap-2"
             >
               <span v-if="isSaving" class="material-symbols-outlined animate-spin text-xl">refresh</span>
-              {{ isSaving ? 'Saving...' : (editingRoom ? 'Update Room' : 'Create Room') }}
+              {{ isSaving ? $t('saving') : (editingRoom ? $t('update_room') : $t('create_room')) }}
             </button>
           </div>
         </form>
@@ -154,7 +154,9 @@ import request from '@/util/request'
 import { showToast } from '@/util/toast'
 import configurl from '@/util/configurl'
 import { resolveImageUrl } from '@/util/image'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const emit = defineEmits(['saved', 'saving'])
 
 const showModal = ref(false)
@@ -219,7 +221,7 @@ const handleImageUpload = (event) => {
   const file = event.target.files[0]
   if (!file) return
   if (file.size > 2 * 1024 * 1024) {
-    showToast('Image must be under 2MB', 'error')
+    showToast(t('image_under_2mb'), 'error')
     return
   }
 
@@ -252,16 +254,16 @@ const save = async () => {
     if (editingRoom.value) {
       formData.append('_method', 'PUT')
       await request(`/rooms/${editingRoom.value}`, 'POST', formData)
-      showToast('Room updated successfully', 'success')
+      showToast(t('room_updated_successfully'), 'success')
     } else {
       await request('/rooms', 'POST', formData)
-      showToast('Room created successfully', 'success')
+      showToast(t('room_created_successfully'), 'success')
     }
 
     close(true)
     emit('saved')
   } catch (error) {
-    const msg = error.response?.data?.message || 'Failed to save room'
+    const msg = error.response?.data?.message || t('failed_to_save_room')
     showToast(msg, 'error')
   } finally {
     isSaving.value = false

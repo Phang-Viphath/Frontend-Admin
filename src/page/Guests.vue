@@ -3,9 +3,9 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Guests</h1>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('guests_title') }}</h1>
         <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-          Manage guest profiles and registration history
+          {{ $t('manage_guest_profiles') }}
         </p>
       </div>
       <button
@@ -15,7 +15,7 @@
       >
         <span v-if="isLoading" class="animate-spin material-symbols-outlined">refresh</span>
         <span v-else class="material-symbols-outlined text-xl">person_add</span>
-        Add New Guest
+        {{ $t('add_new_guest') }}
       </button>
     </div>
 
@@ -28,7 +28,7 @@
             v-model="searchQuery"
             type="text"
             :disabled="isLoading"
-            placeholder="Search by name, email, phone or ID..."
+            :placeholder="$t('search_guest_placeholder')"
             class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all disabled:opacity-60"
           />
         </div>
@@ -38,10 +38,10 @@
           :disabled="isLoading"
           class="px-4 py-2.5 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-60"
         >
-          <option value="newest">Newest First</option>
-          <option value="oldest">Oldest First</option>
-          <option value="name-asc">Name A–Z</option>
-          <option value="name-desc">Name Z–A</option>
+          <option value="newest">{{ $t('newest_first') }}</option>
+          <option value="oldest">{{ $t('oldest_first') }}</option>
+          <option value="name-asc">{{ $t('name_asc') }}</option>
+          <option value="name-desc">{{ $t('name_desc') }}</option>
         </select>
       </div>
     </div>
@@ -98,10 +98,10 @@
         <table class="w-full text-sm">
           <thead class="text-xs uppercase bg-gray-50 dark:bg-[#2d3b4e] text-gray-700 dark:text-gray-400">
             <tr>
-              <th class="px-6 py-4 text-left">Guest</th>
-              <th class="px-6 py-4 text-left">Contact</th>
-              <th class="px-6 py-4 text-left">Registered</th>
-              <th class="px-6 py-4 text-center">Actions</th>
+              <th class="px-6 py-4 text-left">{{ $t('guest') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('contact') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('registered') }}</th>
+              <th class="px-6 py-4 text-center">{{ $t('actions') }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -138,7 +138,8 @@
                     @click="openEditModal(guest)" 
                     :disabled="isSaving"
                     class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#3d4b5e] disabled:opacity-60 disabled:cursor-not-allowed" 
-                    aria-label="Edit"
+                    :aria-label="$t('edit')"
+                    :title="$t('edit')"
                   >
                     <span class="material-symbols-outlined text-lg">edit</span>
                   </button>
@@ -146,7 +147,8 @@
                     @click="confirmDelete(guest)" 
                     :disabled="isSaving"
                     class="p-2 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 disabled:opacity-60 disabled:cursor-not-allowed" 
-                    aria-label="Delete"
+                    :aria-label="$t('delete')"
+                    :title="$t('delete')"
                   >
                     <span class="material-symbols-outlined text-lg">delete</span>
                   </button>
@@ -158,7 +160,7 @@
               <td colspan="4" class="px-6 py-10 text-center text-gray-500 dark:text-gray-400">
                 <div class="flex flex-col items-center gap-2">
                   <span class="material-symbols-outlined text-4xl text-gray-400">group_off</span>
-                  <p class="text-sm">No guests found matching your criteria</p>
+                  <p class="text-sm">{{ $t('no_guests_found_matching') }}</p>
                 </div>
               </td>
             </tr>
@@ -170,10 +172,10 @@
         <p class="text-sm text-gray-600 dark:text-gray-400">
           <span v-if="isLoading" class="inline-flex items-center gap-2">
             <span class="animate-spin material-symbols-outlined text-sm">refresh</span>
-            Loading guests...
+            {{ $t('loading_guests') }}
           </span>
           <span v-else>
-            Showing {{ displayedGuests.length }} guest{{ displayedGuests.length !== 1 ? 's' : '' }}
+            {{ $t('showing_guests', { count: displayedGuests.length }) }}
           </span>
         </p>
       </div>
@@ -182,9 +184,9 @@
     <GuestFormModal ref="guestFormModal" @saved="fetchGuests" @saving="setSaving" />
     <ConfirmModalDelete 
       ref="confirmModalDelete"
-      title="Delete Guest"
-      message="Are you sure you want to delete this guest? This action cannot be undone."
-      confirm-text="Delete Guest"
+      :title="$t('delete_guest')"
+      :message="$t('delete_guest_confirm')"
+      :confirm-text="$t('delete_guest')"
     />
   </div>
 </template>

@@ -3,6 +3,10 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 const print = (reservation) => {
   const r = reservation
   if (!r?.id) return
@@ -14,7 +18,7 @@ const print = (reservation) => {
   const checkOut = r.checkOut || ''
   const status = r.statusLabel || ''
   
-  const roomName = r.raw?.room ? `Room ${r.raw.room.number}` : (r.room || 'N/A')
+  const roomName = r.raw?.room ? `${t('room_label')} ${r.raw.room.number}` : (r.room || 'N/A')
   const roomType = r.raw?.room?.type || ''
   const priceNight = Number(r.raw?.room?.price || 0)
   const total = Number(r.total || 0)
@@ -27,7 +31,7 @@ const print = (reservation) => {
   <html>
     <head>
       <meta charset="utf-8" />
-      <title>Invoice #${r.id}</title>
+      <title>${t('invoice')} #${r.id}</title>
       <style>
         :root {
           --primary-color: #111827;
@@ -167,7 +171,7 @@ const print = (reservation) => {
     <body>
       <div class="invoice-container">
         <header class="header">
-          <h1>Invoice</h1>
+          <h1>${t('invoice')}</h1>
           <div class="hotel-info">
             <h2>Battambang Hotel</h2>
             <p>03 Battambang, Cambodia</p>
@@ -176,16 +180,16 @@ const print = (reservation) => {
 
         <div class="meta-details">
           <div class="meta-section">
-            <h3>Billed To</h3>
+            <h3>${t('billed_to')}</h3>
             <p><strong>${guestName}</strong></p>
             ${guestEmail ? `<p>${guestEmail}</p>` : ''}
           </div>
           <div class="meta-section">
-            <h3>Reservation Details</h3>
-            <p><strong>Invoice No:</strong> #${r.id}</p>
-            <p><strong>Date Issued:</strong> ${todayDate}</p>
-            <p><strong>Check-in:</strong> ${checkIn}</p>
-            <p><strong>Check-out:</strong> ${checkOut}</p>
+            <h3>${t('reservation_details')}</h3>
+            <p><strong>${t('invoice_no')}</strong> #${r.id}</p>
+            <p><strong>${t('date_issued')}</strong> ${todayDate}</p>
+            <p><strong>${t('check_in')}</strong> ${checkIn}</p>
+            <p><strong>${t('check_out')}</strong> ${checkOut}</p>
             <div class="status-badge ${status.toLowerCase()}">${status}</div>
           </div>
         </div>
@@ -193,16 +197,16 @@ const print = (reservation) => {
         <table>
           <thead>
             <tr>
-              <th>Description</th>
-              <th class="text-right">Rate / Night</th>
-              <th class="text-right">Total Amount</th>
+              <th>${t('description')}</th>
+              <th class="text-right">${t('rate_per_night')}</th>
+              <th class="text-right">${t('total_amount')}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>
                 <strong>${roomName}</strong>
-                ${roomType ? `<br><span style="color: #6b7280; font-size: 13px;">Room Type: ${roomType}</span>` : ''}
+                ${roomType ? `<br><span style="color: #6b7280; font-size: 13px;">${t('room_type_label')} ${roomType}</span>` : ''}
               </td>
               <td class="text-right">$${priceNight.toFixed(2)}</td>
               <td class="text-right">$${total.toFixed(2)}</td>
@@ -213,23 +217,23 @@ const print = (reservation) => {
         <div class="summary-section">
           <div class="totals-box">
             <div class="totals-row">
-              <span>Subtotal</span>
+              <span>${t('subtotal')}</span>
               <span>$${total.toFixed(2)}</span>
             </div>
             <div class="totals-row">
-              <span>Taxes & Fees</span>
-              <span>Included</span>
+              <span>${t('taxes_and_fees')}</span>
+              <span>${t('included')}</span>
             </div>
             <div class="totals-row grand-total">
-              <span>Total Balance</span>
+              <span>${t('total_balance')}</span>
               <span>$${total.toFixed(2)}</span>
             </div>
           </div>
         </div>
 
         <footer class="footer">
-          <p>Thank you for choosing battambang hotel. We hope you enjoyed your visit!</p>
-          <p style="margin-top: 8px; font-size: 12px; color: #9ca3af;">If you have any questions about this invoice, please contact +855 963612863</p>
+          <p>${t('invoice_thank_you')}</p>
+          <p style="margin-top: 8px; font-size: 12px; color: #9ca3af;">${t('invoice_contact_info')}</p>
         </footer>
       </div>
       <script>

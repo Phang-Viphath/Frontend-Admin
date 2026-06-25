@@ -4,7 +4,7 @@
     <div v-if="isLoading" class="p-4 border-b border-gray-200 dark:border-slate-700 flex items-center justify-end bg-gray-50/50 dark:bg-slate-800/50">
       <span class="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
         <span class="material-symbols-outlined animate-spin text-[16px] text-blue-600">progress_activity</span>
-        Loading reservations...
+        {{ $t('loading_reservations') }}
       </span>
     </div>
 
@@ -13,13 +13,13 @@
       <table class="w-full text-sm">
         <thead class="text-xs uppercase bg-gray-50 dark:bg-slate-700 text-gray-700 dark:text-gray-400 border-b border-gray-200 dark:border-slate-700">
           <tr>
-            <th class="px-6 py-4 text-left">Guest</th>
-            <th class="px-6 py-4 text-left">Room</th>
-            <th class="px-6 py-4 text-left">Check-in</th>
-            <th class="px-6 py-4 text-left">Check-out</th>
-            <th class="px-6 py-4 text-left">Total</th>
-            <th class="px-6 py-4 text-left">Status</th>
-            <th class="px-6 py-4 text-center">Actions</th>
+            <th class="px-6 py-4 text-left">{{ $t('guest') }}</th>
+            <th class="px-6 py-4 text-left">{{ $t('room') }}</th>
+            <th class="px-6 py-4 text-left">{{ $t('check_in') }}</th>
+            <th class="px-6 py-4 text-left">{{ $t('check_out') }}</th>
+            <th class="px-6 py-4 text-left">{{ $t('total') }}</th>
+            <th class="px-6 py-4 text-left">{{ $t('status_header') }}</th>
+            <th class="px-6 py-4 text-center">{{ $t('actions') }}</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 dark:divide-slate-700">
@@ -54,8 +54,8 @@
             <td colspan="7" class="px-6 py-16 text-center">
               <div class="flex flex-col items-center justify-center">
                 <span class="material-symbols-outlined text-6xl text-gray-300 dark:text-gray-600 mb-4">event_busy</span>
-                <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">No reservations found</p>
-                <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Try adjusting your filters</p>
+                <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">{{ $t('no_reservations_found') }}</p>
+                <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">{{ $t('try_adjusting_filters') }}</p>
               </div>
             </td>
           </tr>
@@ -95,11 +95,12 @@
               <td class="px-6 py-4">
                 <span
                   :class="[
-                    'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium',
+                    'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium gap-1.5',
                     statusBadgeClasses[reservation.status] || statusBadgeClasses.pending
                   ]"
                 >
-                  {{ reservation.statusLabel }}
+                  <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+                  {{ $t('status_' + (reservation.status || 'pending').replace(/[- ]/g, '_')) }}
                 </span>
               </td>
               <td class="px-6 py-4">
@@ -108,7 +109,7 @@
                     @click="$emit('view', reservation)"
                     :disabled="isSaving"
                     class="inline-flex items-center justify-center size-9 rounded-lg border border-transparent text-blue-600 dark:text-blue-400 hover:bg-blue-50 hover:border-blue-100 dark:hover:bg-blue-900/20 dark:hover:border-blue-900/30 transition disabled:opacity-60 disabled:cursor-not-allowed"
-                    title="View"
+                    :title="$t('view')"
                   >
                     <span class="material-symbols-outlined text-[20px]">visibility</span>
                   </button>
@@ -116,7 +117,7 @@
                     @click="$emit('pay', reservation)"
                     :disabled="isSaving"
                     class="inline-flex items-center justify-center size-9 rounded-lg border border-transparent text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 hover:border-emerald-100 dark:hover:bg-emerald-900/20 dark:hover:border-emerald-900/30 transition disabled:opacity-60 disabled:cursor-not-allowed"
-                    title="Payment"
+                    :title="$t('payment')"
                   >
                     <span class="material-symbols-outlined text-[20px]">qr_code_2</span>
                   </button>
@@ -124,7 +125,7 @@
                     @click="$emit('print', reservation)"
                     :disabled="isSaving"
                     class="inline-flex items-center justify-center size-9 rounded-lg border border-transparent text-slate-700 dark:text-slate-300 hover:bg-slate-50 hover:border-slate-200 dark:hover:bg-slate-700/50 dark:hover:border-slate-700 transition disabled:opacity-60 disabled:cursor-not-allowed"
-                    title="Print Invoice"
+                    :title="$t('print_invoice')"
                   >
                     <span class="material-symbols-outlined text-[20px]">print</span>
                   </button>
@@ -132,7 +133,7 @@
                     @click="$emit('edit', reservation)"
                     :disabled="isSaving"
                     class="inline-flex items-center justify-center size-9 rounded-lg border border-transparent text-green-600 dark:text-green-400 hover:bg-green-50 hover:border-green-100 dark:hover:bg-green-900/20 dark:hover:border-green-900/30 transition disabled:opacity-60 disabled:cursor-not-allowed"
-                    title="Edit"
+                    :title="$t('edit')"
                   >
                     <span class="material-symbols-outlined text-[20px]">edit</span>
                   </button>
@@ -140,7 +141,7 @@
                     @click="$emit('cancel', reservation)"
                     :disabled="isSaving"
                     class="inline-flex items-center justify-center size-9 rounded-lg border border-transparent text-red-600 dark:text-red-400 hover:bg-red-50 hover:border-red-100 dark:hover:bg-red-900/20 dark:hover:border-red-900/30 transition disabled:opacity-60 disabled:cursor-not-allowed"
-                    title="Delete"
+                    :title="$t('delete')"
                   >
                     <span
                       class="material-symbols-outlined text-[20px]"
@@ -160,7 +161,7 @@
     <!-- Footer -->
     <div v-if="!isLoading && reservations.length > 0" class="px-6 py-4 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900/50">
       <p class="text-sm text-gray-600 dark:text-gray-400">
-        Showing {{ reservations.length }} reservation{{ reservations.length !== 1 ? 's' : '' }}
+        {{ $t('showing_reservations', { count: reservations.length }) }}
       </p>
     </div>
   </div>

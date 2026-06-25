@@ -9,8 +9,8 @@
         <!-- Header -->
         <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
           <div>
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Add New Role</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Create a new user role with permissions</p>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $t('add_new_role') }}</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('add_new_role_desc') }}</p>
           </div>
           <button @click="closeModal" class="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
             <span class="material-symbols-outlined text-xl">close</span>
@@ -22,14 +22,14 @@
           <!-- Role Name -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Role Name <span class="text-red-500">*</span>
+              {{ $t('role_name') }} <span class="text-red-500">*</span>
             </label>
             <input
               v-model="formData.name"
               type="text"
               required
               class="w-full px-3 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
-              placeholder="e.g., Administrator"
+              :placeholder="$t('role_name_placeholder')"
             />
             <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
           </div>
@@ -37,14 +37,14 @@
           <!-- Role Code -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Role Code <span class="text-red-500">*</span>
+              {{ $t('role_code') }} <span class="text-red-500">*</span>
             </label>
             <input
               v-model="formData.code"
               type="text"
               required
               class="w-full px-3 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
-              placeholder="e.g., ADMIN"
+              :placeholder="$t('role_code_placeholder')"
             />
             <p v-if="errors.code" class="mt-1 text-sm text-red-600">{{ errors.code }}</p>
           </div>
@@ -52,20 +52,20 @@
           <!-- Description -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Description
+              {{ $t('description') }}
             </label>
             <textarea
               v-model="formData.description"
               rows="3"
               class="w-full px-3 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all resize-none"
-              placeholder="Brief description of the role's permissions"
+              :placeholder="$t('role_desc_placeholder')"
             ></textarea>
           </div>
 
           <!-- Permissions -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Permissions
+              {{ $t('permissions') }}
             </label>
             <div class="space-y-2 max-h-60 overflow-y-auto p-2 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
               <div v-for="permission in permissionOptions" :key="permission.id" class="flex items-center">
@@ -86,7 +86,7 @@
           <!-- Status -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Status
+              {{ $t('status_header') }}
             </label>
             <div class="flex gap-4">
               <label class="flex items-center">
@@ -96,7 +96,7 @@
                   value="active"
                   class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Active</span>
+                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ $t('active') }}</span>
               </label>
               <label class="flex items-center">
                 <input
@@ -105,7 +105,7 @@
                   value="inactive"
                   class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Inactive</span>
+                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ $t('inactive') }}</span>
               </label>
             </div>
           </div>
@@ -117,7 +117,7 @@
               @click="closeModal"
               class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
             >
-              Cancel
+              {{ $t('cancel') }}
             </button>
             <button
               type="submit"
@@ -129,9 +129,9 @@
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Creating...
+                {{ $t('creating') }}
               </span>
-              <span v-else>Create Role</span>
+              <span v-else>{{ $t('create_role') }}</span>
             </button>
           </div>
         </form>
@@ -144,6 +144,9 @@
 import { ref, watch, onMounted } from 'vue'
 import request from '@/util/request.js'
 import { showToast } from '@/util/toast'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const props = defineProps({
   isOpen: {
     type: Boolean,
@@ -201,7 +204,7 @@ const submitForm = async () => {
     
     emit('created')
     closeModal()
-    showToast('Role created successfully', 'success')    
+    showToast(t('role_created_successfully'), 'success')    
   } catch (error) {
     console.error('Full error object:', error)
     
@@ -216,10 +219,10 @@ const submitForm = async () => {
     } 
     // Handle network errors
     else if (error.message) {
-      showToast(`Network error: ${error.message}`, 'error')
+      showToast(`${t('network_error')}: ${error.message}`, 'error')
     } 
     else {
-      showToast('Failed to create role. Please check the console for details.', 'error')
+      showToast(t('role_create_failed'), 'error')
     }
   } finally {
     isSubmitting.value = false

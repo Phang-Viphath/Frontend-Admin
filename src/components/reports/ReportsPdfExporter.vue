@@ -3,6 +3,9 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const props = defineProps({
   reportPeriod: {
     type: String,
@@ -24,15 +27,15 @@ const props = defineProps({
 
 const exportPdf = () => {
   const periodLabelMap = {
-    week: 'Last 7 Days',
-    month: 'Last Month',
-    quarter: 'Last Quarter',
-    year: 'Last Year',
-    custom: 'Custom Range',
+    week: t('last_7_days'),
+    month: t('last_month'),
+    quarter: t('last_quarter'),
+    year: t('last_year'),
+    custom: t('custom_range'),
   }
 
   const periodLabel = periodLabelMap[props.reportPeriod] || props.reportPeriod
-  const title = `Reports & Analytics - ${periodLabel}`
+  const title = `${t('reports_title')} - ${periodLabel}`
 
   const rowsHtml = (props.monthlySummary || [])
     .map(
@@ -82,36 +85,36 @@ const exportPdf = () => {
         <div class="header">
           <div>
             <div class="brand">${title}</div>
-            <div class="muted">Range: ${props.range?.start || ''} to ${props.range?.end || ''} (${props.range?.days || 0} days)</div>
+            <div class="muted">${t('range_label')}: ${props.range?.start || ''} to ${props.range?.end || ''} (${props.range?.days || 0} days)</div>
           </div>
-          <div class="muted">Generated: ${new Date().toLocaleString()}</div>
+          <div class="muted">${t('generated')}: ${new Date().toLocaleString()}</div>
         </div>
 
         <div class="kpis">
-          <div class="kpi"><div class="label">Average Occupancy</div><div class="value">${props.kpis.occupancy_rate}%</div></div>
-          <div class="kpi"><div class="label">ADR</div><div class="value">$${props.kpis.adr}</div></div>
-          <div class="kpi"><div class="label">RevPAR</div><div class="value">$${props.kpis.revpar}</div></div>
-          <div class="kpi"><div class="label">Total Revenue</div><div class="value">$${props.kpis.total_revenue}</div></div>
+          <div class="kpi"><div class="label">${t('avg_occupancy')}</div><div class="value">${props.kpis.occupancy_rate}%</div></div>
+          <div class="kpi"><div class="label">${t('adr_header')}</div><div class="value">$${props.kpis.adr}</div></div>
+          <div class="kpi"><div class="label">${t('revpar_header')}</div><div class="value">$${props.kpis.revpar}</div></div>
+          <div class="kpi"><div class="label">${t('total_revenue')}</div><div class="value">$${props.kpis.total_revenue}</div></div>
         </div>
 
-        <div class="section-title">Monthly Performance Summary</div>
+        <div class="section-title">${t('monthly_performance_summary')}</div>
         <table>
           <thead>
             <tr>
-              <th>Month</th>
-              <th>Occupancy</th>
-              <th>ADR</th>
-              <th>RevPAR</th>
-              <th>Total Revenue</th>
-              <th>Bookings</th>
+              <th>${t('month')}</th>
+              <th>${t('occupancy_header')}</th>
+              <th>${t('adr_header')}</th>
+              <th>${t('revpar_header')}</th>
+              <th>${t('total_revenue')}</th>
+              <th>${t('bookings')}</th>
             </tr>
           </thead>
           <tbody>
-            ${rowsHtml || '<tr><td colspan="6" style="text-align:center;color:#666;">No data</td></tr>'}
+            ${rowsHtml || `<tr><td colspan="6" style="text-align:center;color:#666;">${t('no_data')}</td></tr>`}
           </tbody>
         </table>
 
-        <div class="no-print muted" style="margin-top: 10px;">Tip: Use Print dialog and choose “Save as PDF”.</div>
+        <div class="no-print muted" style="margin-top: 10px;">${t('print_tip')}</div>
         <script>
           window.onload = function() { window.print(); };
         <\/script>

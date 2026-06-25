@@ -30,7 +30,7 @@
           @click="close"
           class="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition"
         >
-          Cancel
+          {{ $t('cancel') }}
         </button>
         <button
           @click="confirm"

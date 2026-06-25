@@ -3,8 +3,8 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Reports & Analytics</h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">In-depth insights into hotel performance and trends</p>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('reports_title') }}</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ $t('reports_subtitle') }}</p>
       </div>
       <div class="flex items-center gap-3">
         <span v-if="isLoading" class="material-symbols-outlined animate-spin text-xl text-gray-400">refresh</span>
@@ -13,12 +13,12 @@
           :disabled="isLoading"
           class="px-4 py-2.5 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          <option value="day">Daily</option>
-          <option value="week">Last 7 Days</option>
-          <option value="month">Last Month</option>
-          <option value="quarter">Last Quarter</option>
-          <option value="year">Last Year</option>
-          <option value="custom">Custom Range</option>
+          <option value="day">{{ $t('daily') }}</option>
+          <option value="week">{{ $t('last_7_days') }}</option>
+          <option value="month">{{ $t('last_month') }}</option>
+          <option value="quarter">{{ $t('last_quarter') }}</option>
+          <option value="year">{{ $t('last_year') }}</option>
+          <option value="custom">{{ $t('custom_range') }}</option>
         </select>
         <button
           :disabled="isLoading"
@@ -26,7 +26,7 @@
           class="px-4 py-2 bg-[green] text-white rounded-lg hover:bg-[green]/90 transition-colors flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <span class="material-symbols-outlined text-xl">download</span>
-          Export PDF
+          {{ $t('export_pdf') }}
         </button>
       </div>
     </div>
@@ -44,7 +44,7 @@
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Average Occupancy</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ $t('avg_occupancy') }}</p>
             <p class="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{{ isLoading ? '—' : `${kpis.occupancy_rate}%` }}</p>
           </div>
           <div class="p-3 rounded-lg bg-blue-100 dark:bg-blue-900/30">
@@ -56,7 +56,7 @@
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">ADR (Avg Daily Rate)</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ $t('adr') }}</p>
             <p class="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{{ isLoading ? '—' : `$${kpis.adr}` }}</p>
           </div>
           <div class="p-3 rounded-lg bg-green-100 dark:bg-green-900/30">
@@ -68,7 +68,7 @@
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">RevPAR</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ $t('revpar') }}</p>
             <p class="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{{ isLoading ? '—' : `$${kpis.revpar}` }}</p>
           </div>
           <div class="p-3 rounded-lg bg-purple-100 dark:bg-purple-900/30">
@@ -80,7 +80,7 @@
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Revenue</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ $t('total_revenue') }}</p>
             <p class="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{{ isLoading ? '—' : `$${kpis.total_revenue}` }}</p>
           </div>
           <div class="p-3 rounded-lg bg-orange-100 dark:bg-orange-900/30">
@@ -95,10 +95,10 @@
       <!-- Occupancy & Revenue Trend -->
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between gap-3 mb-4">
-          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Occupancy & Revenue Trend</h2>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $t('occupancy_revenue_trend') }}</h2>
           <div class="flex items-center gap-2">
-            <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">Occupancy</span>
-            <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300">Revenue</span>
+            <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">{{ $t('occupancy') }}</span>
+            <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300">{{ $t('revenue') }}</span>
           </div>
         </div>
 
@@ -110,10 +110,10 @@
           <div v-else class="h-full w-full p-6">
             <div class="flex items-start justify-between gap-4 mb-4">
               <div>
-                <p class="text-sm font-medium text-gray-700 dark:text-gray-200">Preview</p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Occupancy % + Revenue over time</p>
+                <p class="text-sm font-medium text-gray-700 dark:text-gray-200">{{ $t('preview') }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">{{ $t('occupancy_revenue_over_time') }}</p>
               </div>
-              <span class="text-xs text-gray-500 dark:text-gray-400">Coming soon</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400">{{ $t('coming_soon') }}</span>
             </div>
 
             <div class="relative h-56 rounded-lg border border-dashed border-gray-200 dark:border-gray-600 bg-white/60 dark:bg-black/10 overflow-hidden">
@@ -166,7 +166,7 @@
       <!-- Revenue Sources Breakdown -->
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between gap-3 mb-4">
-          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Revenue by Source</h2>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $t('revenue_by_source') }}</h2>
           <div class="flex items-center gap-2">
             <span
               v-for="(s, idx) in revenueSources"
@@ -187,8 +187,8 @@
           <div v-else class="h-full w-full p-6">
             <div class="flex items-start justify-between gap-4 mb-4">
               <div>
-                <p class="text-sm font-medium text-gray-700 dark:text-gray-200">Preview</p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Room type revenue breakdown</p>
+                <p class="text-sm font-medium text-gray-700 dark:text-gray-200">{{ $t('preview') }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">{{ $t('room_type_revenue_breakdown') }}</p>
               </div>
               <span class="text-xs text-gray-500 dark:text-gray-400">{{ chartXAxisStart }} - {{ chartXAxisEnd }}</span>
             </div>
@@ -200,7 +200,7 @@
                   <div class="absolute inset-8 rounded-full bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-700" />
                   <div class="absolute inset-0 flex items-center justify-center">
                     <div class="text-center">
-                      <p class="text-xs text-gray-500 dark:text-gray-400">Total</p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400">{{ $t('total') }}</p>
                       <p class="text-lg font-bold text-gray-900 dark:text-gray-100">100%</p>
                     </div>
                   </div>
@@ -209,7 +209,7 @@
 
               <div class="space-y-3">
                 <div v-if="!revenueSources.length" class="text-sm text-gray-500 dark:text-gray-400">
-                  No data
+                  {{ $t('no_data') }}
                 </div>
 
                 <template v-else>
@@ -240,18 +240,18 @@
     <!-- Summary Table -->
     <div class="rounded-xl bg-white dark:bg-[#1e293b] shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
       <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Monthly Performance Summary</h2>
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $t('monthly_performance_summary') }}</h2>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead class="text-xs uppercase bg-gray-50 dark:bg-[#2d3b4e] text-gray-700 dark:text-gray-400">
             <tr>
-              <th class="px-6 py-3 text-left">Month</th>
-              <th class="px-6 py-3 text-left">Occupancy</th>
-              <th class="px-6 py-3 text-left">ADR</th>
-              <th class="px-6 py-3 text-left">RevPAR</th>
-              <th class="px-6 py-3 text-left">Total Revenue</th>
-              <th class="px-6 py-3 text-left">Bookings</th>
+              <th class="px-6 py-3 text-left">{{ $t('month') }}</th>
+              <th class="px-6 py-3 text-left">{{ $t('occupancy_header') }}</th>
+              <th class="px-6 py-3 text-left">{{ $t('adr_header') }}</th>
+              <th class="px-6 py-3 text-left">{{ $t('revpar_header') }}</th>
+              <th class="px-6 py-3 text-left">{{ $t('total_revenue') }}</th>
+              <th class="px-6 py-3 text-left">{{ $t('bookings') }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -260,7 +260,7 @@
                 <td colspan="6" class="text-center py-10 text-gray-400">
                   <span class="inline-flex items-center gap-2">
                     <span class="material-symbols-outlined animate-spin text-4xl text-blue-600">refresh</span>
-                    Loading report...
+                    {{ $t('loading_report') }}
                   </span>
                 </td>
               </tr>
@@ -281,7 +281,7 @@
 
               <tr v-if="!monthlySummary.length">
                 <td colspan="6" class="text-center py-10 text-gray-400">
-                  No data
+                  {{ $t('no_data') }}
                 </td>
               </tr>
             </template>

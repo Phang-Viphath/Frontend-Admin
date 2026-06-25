@@ -1,8 +1,22 @@
 <template>
   <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 py-8">
+    <!-- Top-right Theme/Lang Actions -->
+    <div class="absolute top-4 right-4 flex items-center gap-2">
+      <button @click="languageStore.setLanguage(languageStore.locale === 'en' ? 'km' : 'en')"
+        class="flex items-center justify-center h-10 px-3 rounded-lg text-sm font-semibold bg-green-600/10 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors uppercase">
+        {{ languageStore.locale === 'en' ? 'EN' : 'KH' }}
+      </button>
+      <button @click="themeStore.toggleTheme()"
+        class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+        <span class="material-symbols-outlined text-2xl">
+          {{ themeStore.isDark ? 'dark_mode' : 'light_mode' }}
+        </span>
+      </button>
+    </div>
+
     <div class="w-full max-w-xl">
       <div class="rounded-xl bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 p-6 md:p-8">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-6">Register</h2>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-6">{{ $t('register') }}</h2>
 
         <!-- Error message -->
         <div v-if="errorMessage" class="mb-4 p-3 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 rounded-lg text-center text-sm">
@@ -18,7 +32,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Name -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('name') }}</label>
               <div class="relative">
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 text-sm">person</span>
                 <input
@@ -26,14 +40,14 @@
                   type="text"
                   required
                   class="w-full pl-9 pr-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 outline-none text-gray-900 dark:text-white placeholder-gray-500 text-sm"
-                  placeholder="Your Name"
+                  :placeholder="$t('name_placeholder')"
                 />
               </div>
             </div>
 
             <!-- Email -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('email') }}</label>
               <div class="relative">
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 text-sm">mail</span>
                 <input
@@ -42,7 +56,7 @@
                   required
                   autocomplete="email"
                   class="w-full pl-9 pr-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 outline-none text-gray-900 dark:text-white placeholder-gray-500 text-sm"
-                  placeholder="your@email.com"
+                  :placeholder="$t('email_placeholder')"
                 />
               </div>
             </div>
@@ -51,7 +65,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Password -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('password') }}</label>
               <div class="relative">
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 text-sm">lock</span>
                 <input
@@ -75,7 +89,7 @@
 
             <!-- Confirm Password -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm Password</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('confirm_password') }}</label>
               <div class="relative">
                 <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 text-sm">lock</span>
                 <input
@@ -92,7 +106,7 @@
 
           <!-- Profile Image -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Profile Image (Optional)</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('profile_image_optional') }}</label>
             <div class="flex items-center gap-4">
               <input
                 type="file"
@@ -109,21 +123,21 @@
           <!-- Phone & Address -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone (Optional)</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('phone_optional') }}</label>
               <input
                 v-model="phone"
                 type="text"
                 class="w-full px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 outline-none text-gray-900 dark:text-white text-sm"
-                placeholder="+855 12 345 678"
+                :placeholder="$t('phone_placeholder')"
               />
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Address (Optional)</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('address_optional') }}</label>
               <input
                 v-model="address"
                 type="text"
                 class="w-full px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 outline-none text-gray-900 dark:text-white text-sm"
-                placeholder="Phnom Penh, Cambodia"
+                :placeholder="$t('address_placeholder')"
               />
             </div>
           </div>
@@ -137,13 +151,13 @@
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
             </svg>
-            {{ loading ? 'Creating account...' : 'Sign up' }}
+            {{ loading ? $t('creating_account') : $t('sign_up') }}
           </button>
         </form>
 
         <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-6">
-          Already have an account?
-          <router-link to="/login" class="text-green-600 hover:text-green-500 font-medium">Sign in</router-link>
+          {{ $t('already_have_account') }}
+          <router-link to="/login" class="text-green-600 hover:text-green-500 font-medium">{{ $t('sign_in') }}</router-link>
         </p>
       </div>
     </div>
@@ -153,9 +167,15 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import request from '../../util/request'
+import { useThemeStore } from '../../util/theme'
+import { useLanguageStore } from '../../util/language'
 
 const router = useRouter()
+const { t } = useI18n()
+const themeStore = useThemeStore()
+const languageStore = useLanguageStore()
 
 const name = ref('')
 const email = ref('')
@@ -181,7 +201,7 @@ const onFileChange = (e) => {
 
 const onRegister = async () => {
   if (password.value !== password_confirmation.value) {
-    errorMessage.value = 'Passwords do not match'
+    errorMessage.value = t('passwords_do_not_match')
     return
   }
 
@@ -201,14 +221,14 @@ const onRegister = async () => {
 
     const response = await request('/register', 'POST', formData)
 
-    successMessage.value = response?.message || 'Registration successful!'
+    successMessage.value = response?.message || t('registration_successful')
     setTimeout(() => router.push('/login'), 2000)
   } catch (err) {
     const errors = err?.response?.data?.errors
     if (errors) {
       errorMessage.value = Object.values(errors).flat().join(' ')
     } else {
-      errorMessage.value = err?.response?.data?.message || 'Registration failed. Please try again.'
+      errorMessage.value = err?.response?.data?.message || t('registration_failed')
     }
     console.error('Register error:', err)
   } finally {

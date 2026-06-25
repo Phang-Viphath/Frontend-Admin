@@ -3,9 +3,9 @@
     <!-- ================= HEADER ================= -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Role</h1>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('role_singular') }}</h1>
         <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-          Manage user roles, permissions, and access levels
+          {{ $t('manage_roles') }}
         </p>
       </div>
 
@@ -15,7 +15,7 @@
         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
       >
         <span class="material-symbols-outlined">add</span>
-        Add New Role
+        {{ $t('add_new_role') }}
       </button>
     </div>
 
@@ -27,21 +27,21 @@
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Search role name or code..."
+            :placeholder="$t('search_role_placeholder')"
             :disabled="isLoading || isSaving"
             class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
         <select v-model="statusFilter" :disabled="isLoading || isSaving" class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-50 disabled:cursor-not-allowed">
-          <option value="all">All Status</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+          <option value="all">{{ $t('all_status') }}</option>
+          <option value="active">{{ $t('active') }}</option>
+          <option value="inactive">{{ $t('inactive') }}</option>
         </select>
 
         <select v-model="sortBy" :disabled="isLoading || isSaving" class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-50 disabled:cursor-not-allowed">
-          <option value="name">Sort by Name</option>
-          <option value="created_at">Sort by Created Date</option>
+          <option value="name">{{ $t('sort_by_name') }}</option>
+          <option value="created_at">{{ $t('sort_by_created_date') }}</option>
         </select>
       </div>
     </div>
@@ -52,7 +52,7 @@
       <div v-if="isLoading" class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-end bg-gray-50/50 dark:bg-[#2d3b4e]/50">
         <span class="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
           <span class="material-symbols-outlined animate-spin text-[16px] text-blue-600">progress_activity</span>
-          Loading roles...
+          {{ $t('loading_roles') }}
         </span>
       </div>
 
@@ -61,14 +61,14 @@
         <table class="w-full text-sm">
           <thead class="bg-gray-50 dark:bg-[#2d3b4e] text-gray-600 dark:text-gray-300">
             <tr>
-              <th class="px-6 py-4 text-left">ID</th>
-              <th class="px-6 py-4 text-left">Name</th>
-              <th class="px-6 py-4 text-left">Code</th>
-              <th class="px-6 py-4 text-left">Description</th>
-              <th class="px-6 py-4 text-left">Status</th>
-              <th class="px-6 py-4 text-left">Created</th>
-              <th class="px-6 py-4 text-left">Updated</th>
-              <th class="px-6 py-4 text-center">Actions</th>
+              <th class="px-6 py-4 text-left">{{ $t('id') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('name_header') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('code') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('description') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('status_header') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('created') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('updated') }}</th>
+              <th class="px-6 py-4 text-center">{{ $t('actions') }}</th>
             </tr>
           </thead>
           <tbody class="divide-y dark:divide-gray-700">
@@ -113,7 +113,7 @@
                   </span>
                 </td>
                 <td class="px-6 py-4 text-gray-600 dark:text-gray-300 truncate max-w-xs">
-                  {{ role.description || 'No description' }}
+                  {{ role.description || $t('no_description') }}
                 </td>
                 <td class="px-6 py-4">
                   <span
@@ -122,7 +122,7 @@
                       : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'"
                     class="px-3 py-1 rounded-full text-xs capitalize"
                   >
-                    {{ role.status }}
+                    {{ $t(role.status) }}
                   </span>
                 </td>
                 <td class="px-6 py-4">
@@ -156,7 +156,7 @@
                 <td colspan="8" class="text-center py-16">
                   <div class="flex flex-col items-center justify-center">
                     <span class="material-symbols-outlined text-6xl text-gray-300 dark:text-gray-600 mb-4">admin_panel_settings</span>
-                    <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">No roles found</p>
+                    <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">{{ $t('no_roles_found') }}</p>
                   </div>
                 </td>
               </tr>
@@ -167,7 +167,7 @@
 
       <!-- Footer -->
       <div v-if="!isLoading && filteredRoles.length > 0" class="flex justify-between items-center px-6 py-4 border-t dark:border-gray-700 bg-gray-50/50 dark:bg-[#2d3b4e]/50">
-        <p class="text-sm text-gray-500">Total: {{ totalRoles }} roles</p>
+        <p class="text-sm text-gray-500">{{ $t('total_roles', { total: totalRoles }) }}</p>
       </div>
     </div>
 

@@ -4,9 +4,9 @@
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
         <div class="flex items-center gap-2">
-          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Historys</h1>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('history_title') }}</h1>
         </div>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage guest profiles, loyalty, and stay history</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ $t('manage_history') }}</p>
       </div>
     </div>
 
@@ -18,7 +18,7 @@
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Search by name, email, phone..."
+            :placeholder="$t('search_history_placeholder')"
             :disabled="isLoading || isSaving"
             class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           />
@@ -29,11 +29,11 @@
           :disabled="isLoading || isSaving"
           class="px-4 py-2.5 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <option value="all">All Status</option>
-          <option value="current">Current Stay</option>
-          <option value="past">Past Guest</option>
-          <option value="upcoming">Upcoming</option>
-          <option value="vip">VIP / Loyalty</option>
+          <option value="all">{{ $t('all_status') }}</option>
+          <option value="current">{{ $t('current_stay') }}</option>
+          <option value="past">{{ $t('past_guest') }}</option>
+          <option value="upcoming">{{ $t('upcoming') }}</option>
+          <option value="vip">{{ $t('vip_loyalty') }}</option>
         </select>
 
         <select
@@ -41,11 +41,11 @@
           :disabled="isLoading || isSaving"
           class="px-4 py-2.5 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <option value="all">All Loyalty Levels</option>
-          <option value="none">None</option>
-          <option value="silver">Silver</option>
-          <option value="gold">Gold</option>
-          <option value="platinum">Platinum</option>
+          <option value="all">{{ $t('all_loyalty') }}</option>
+          <option value="none">{{ $t('loyalty_none') }}</option>
+          <option value="silver">{{ $t('loyalty_silver') }}</option>
+          <option value="gold">{{ $t('loyalty_gold') }}</option>
+          <option value="platinum">{{ $t('loyalty_platinum') }}</option>
         </select>
       </div>
     </div>
@@ -56,7 +56,7 @@
       <div v-if="isLoading" class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-end bg-gray-50/50 dark:bg-gray-800/50">
         <span class="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
           <span class="material-symbols-outlined animate-spin text-[16px] text-blue-600">progress_activity</span>
-          Loading historys...
+          {{ $t('loading_history') }}
         </span>
       </div>
 
@@ -64,13 +64,13 @@
         <table class="w-full text-sm">
           <thead class="text-xs uppercase bg-gray-50 dark:bg-[#2d3b4e] text-gray-700 dark:text-gray-400">
             <tr>
-              <th class="px-6 py-4 text-left">Guest</th>
-              <th class="px-6 py-4 text-left">Contact</th>
-              <th class="px-6 py-4 text-left">Current / Upcoming Stay</th>
-              <th class="px-6 py-4 text-left">Loyalty</th>
-              <th class="px-6 py-4 text-left">Total Stays</th>
-              <th class="px-6 py-4 text-left">Status</th>
-              <th class="px-6 py-4 text-center">Actions</th>
+              <th class="px-6 py-4 text-left">{{ $t('guest') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('contact') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('current_upcoming_stay') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('loyalty') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('total_stays') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('status_header') }}</th>
+              <th class="px-6 py-4 text-center">{{ $t('actions') }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -110,8 +110,8 @@
               <td colspan="7" class="px-6 py-12 text-center">
                 <div class="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
                   <span class="material-symbols-outlined text-4xl mb-3">history</span>
-                  <p class="text-lg font-medium">No historys found</p>
-                  <p class="text-sm mt-1">Try adjusting your search or filters</p>
+                  <p class="text-lg font-medium">{{ $t('no_history_found') }}</p>
+                  <p class="text-sm mt-1">{{ $t('try_adjusting_search_history') }}</p>
                 </div>
               </td>
             </tr>
@@ -149,7 +149,7 @@
                   <p class="font-medium text-gray-900 dark:text-gray-100">{{ guest.currentStay.room }}</p>
                   <p class="text-xs text-gray-500 dark:text-gray-400">{{ guest.currentStay.dates }}</p>
                 </div>
-                <p v-else class="text-sm text-gray-500 dark:text-gray-400">No active stay</p>
+                <p v-else class="text-sm text-gray-500 dark:text-gray-400">{{ $t('no_active_stay') }}</p>
               </td>
               <td class="px-6 py-4">
                 <span
@@ -170,7 +170,7 @@
               <td class="px-6 py-4">
                 <div class="flex items-center gap-2">
                   <span class="text-gray-900 dark:text-gray-100 font-medium">{{ guest.totalStays }}</span>
-                  <span class="text-xs text-gray-500 dark:text-gray-400">stays</span>
+                  <span class="text-xs text-gray-500 dark:text-gray-400">{{ $t('stays') }}</span>
                 </div>
               </td>
               <td class="px-6 py-4">
@@ -197,7 +197,8 @@
                 <div class="flex items-center justify-center gap-2">
                   <button
                     class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#3d4b5e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    aria-label="Delete"
+                    :aria-label="$t('delete')"
+                    :title="$t('delete')"
                     @click="deleteHistory(guest)"
                     :disabled="isLoading || isSaving"
                   >
@@ -221,21 +222,21 @@
         v-if="!isLoading && filteredHistorys.length > 0"
         class="flex items-center justify-between px-6 py-4 border-t border-gray-200 dark:border-gray-700"
       >
-        <p class="text-sm text-gray-600 dark:text-gray-400">Showing {{ startItem }}–{{ endItem }} of {{ totalItems }} Historys</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">{{ $t('showing_history_pagination', { start: startItem, end: endItem, total: totalItems }) }}</p>
         <div class="flex gap-2">
           <button
             class="px-3 py-1 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] hover:bg-gray-200 dark:hover:bg-[#3d4b5e] disabled:opacity-50 disabled:cursor-not-allowed"
             :disabled="currentPage === 1 || isLoading"
             @click="prevPage"
           >
-            Previous
+            {{ $t('previous') }}
           </button>
           <button
             class="px-3 py-1 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] hover:bg-gray-200 dark:hover:bg-[#3d4b5e] disabled:opacity-50 disabled:cursor-not-allowed"
             :disabled="currentPage === totalPages || isLoading || totalPages === 0"
             @click="nextPage"
           >
-            Next
+            {{ $t('next') }}
           </button>
         </div>
       </div>
@@ -244,9 +245,9 @@
     <!-- Confirmation Modal -->
     <ConfirmModalDelete
       ref="confirmDeleteModal"
-      title="Delete History"
-      message="This action cannot be undone. Are you sure you want to delete this history?"
-      confirmText="Yes, Delete"
+      :title="$t('delete_history')"
+      :message="$t('delete_history_confirm')"
+      :confirmText="$t('yes_delete')"
     />
   </div>
 </template>

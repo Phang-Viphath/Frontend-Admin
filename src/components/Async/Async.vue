@@ -11,16 +11,16 @@
     <!-- Error -->
     <div v-else-if="hasError" class="py-8 text-center">
       <div class="text-red-600 dark:text-red-400 mb-2 text-lg font-medium">
-        Something went wrong
+        {{ $t('something_went_wrong') }}
       </div>
       <p class="text-gray-500 dark:text-gray-400 mb-4">
-        {{ errorMessage || "Failed to load data. Please try again." }}
+        {{ errorMessage || $t('failed_to_load_data') }}
       </p>
       <button
         @click="retry"
         class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
       >
-        Try Again
+        {{ $t('try_again') }}
       </button>
     </div>
 

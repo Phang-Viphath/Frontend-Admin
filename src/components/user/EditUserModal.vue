@@ -1,8 +1,8 @@
 <template>
-  <Modal :isOpen="isOpen" @close="$emit('close')" :title="`Edit User: ${user?.name}`">
+  <Modal :isOpen="isOpen" @close="$emit('close')" :title="$t('edit_user_title', { name: user?.name })">
     <form @submit.prevent="submitForm" class="space-y-4">
       <div>
-        <label class="block text-sm font-medium mb-2">Profile Image</label>
+        <label class="block text-sm font-medium mb-2">{{ $t('profile_image') }}</label>
         <div class="flex items-center gap-4">
           <div class="h-14 w-14 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center border dark:border-gray-600">
             <img v-if="previewUrl" :src="previewUrl" alt="Preview" class="h-full w-full object-cover" />
@@ -26,16 +26,16 @@
                 @click="removeImage"
                 class="px-3 py-1.5 text-sm rounded-lg border hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50"
               >
-                Remove
+                {{ $t('remove') }}
               </button>
-              <p class="text-xs text-gray-500 dark:text-gray-400">Max 2MB</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">{{ $t('max_2mb') }}</p>
             </div>
           </div>
         </div>
       </div>
 
       <div>
-        <label class="block text-sm font-medium mb-2">Name</label>
+        <label class="block text-sm font-medium mb-2">{{ $t('name') }}</label>
         <input
           v-model="form.name"
           type="text"
@@ -45,7 +45,7 @@
       </div>
       
       <div>
-        <label class="block text-sm font-medium mb-2">Email</label>
+        <label class="block text-sm font-medium mb-2">{{ $t('email') }}</label>
         <input
           v-model="form.email"
           type="email"
@@ -55,7 +55,7 @@
       </div>
       
       <div>
-        <label class="block text-sm font-medium mb-2">New Password (leave blank to keep current)</label>
+        <label class="block text-sm font-medium mb-2">{{ $t('new_password_blank') }}</label>
         <input
           v-model="form.password"
           type="password"
@@ -64,7 +64,7 @@
       </div>
       
       <div>
-        <label class="block text-sm font-medium mb-2">Confirm New Password</label>
+        <label class="block text-sm font-medium mb-2">{{ $t('confirm_new_password') }}</label>
         <input
           v-model="form.password_confirmation"
           type="password"
@@ -79,14 +79,14 @@
           @click="$emit('close')" 
           class="px-4 py-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
         >
-          Cancel
+          {{ $t('cancel') }}
         </button>
         <button 
           type="submit" 
           :disabled="loading"
           class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
         >
-          {{ loading ? 'Updating...' : 'Update User' }}
+          {{ loading ? $t('updating') : $t('update_user') }}
         </button>
       </div>
     </form>
@@ -100,7 +100,9 @@ import { showToast } from '@/util/toast'
 import Modal from './ModalUser.vue'
 import configurl from '@/util/configurl'
 import { resolveImageUrl } from '@/util/image'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const props = defineProps(['isOpen', 'user'])
 const emit = defineEmits(['close', 'updated'])
 
@@ -137,7 +139,7 @@ const submitForm = async () => {
   try {
     // Check if passwords match when provided
     if (form.value.password && form.value.password !== form.value.password_confirmation) {
-      showToast('Passwords do not match', 'error')
+      showToast(t('passwords_do_not_match'), 'error')
       return
     }
     
@@ -157,11 +159,11 @@ const submitForm = async () => {
       await request(`/users/${props.user.id}/profile/image`, 'POST', formData)
     }
 
-    showToast('User updated successfully', 'success')
+    showToast(t('user_updated_successfully'), 'success')
     emit('updated')
   } catch (error) {
     console.error('Update user error:', error)
-    const message = error.response?.data?.message || 'Failed to update user'
+    const message = error.response?.data?.message || t('failed_to_update_user')
     showToast(message, 'error')
   } finally {
     loading.value = false
@@ -176,7 +178,7 @@ const onFileChange = (e) => {
     return
   }
   if (file.size > 2 * 1024 * 1024) {
-    showToast('Image must be less than 2MB', 'error')
+    showToast(t('image_under_2mb'), 'error')
     if (fileInput.value) fileInput.value.value = ''
     imageFile.value = null
     previewUrl.value = resolveImageUrl(props.user?.profile?.image)
@@ -196,10 +198,10 @@ const removeImage = async () => {
     imageFile.value = null
     previewUrl.value = ''
     if (fileInput.value) fileInput.value.value = ''
-    showToast('Profile image removed', 'success')
+    showToast(t('profile_image_removed'), 'success')
     emit('updated')
   } catch (error) {
-    const message = error.response?.data?.message || 'Failed to remove image'
+    const message = error.response?.data?.message || t('failed_to_remove_image')
     showToast(message, 'error')
   } finally {
     loading.value = false

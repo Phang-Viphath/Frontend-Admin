@@ -8,22 +8,22 @@
       @click.stop
     >
       <div class="px-4 py-4 border-b border-gray-200 dark:border-gray-700">
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Edit Reservation</h3>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ $t('edit_reservation') }}</h3>
       </div>
 
       <div class="p-4 space-y-6">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="lg:col-span-2 space-y-6">
+        <div>
+          <div class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Guest</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{{ $t('guest_label') }}</label>
                 <select
                   :value="form.guest_id"
                   @input="$emit('update:form', 'guest_id', $event.target.value)"
                   :disabled="isLoadingGuests || isSaving"
                   class="w-full px-4 py-2.5 bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  <option value="" disabled>{{ isLoadingGuests ? 'Loading guests...' : 'Select guest' }}</option>
+                  <option value="" disabled>{{ isLoadingGuests ? $t('loading_guests') : $t('select_guest') }}</option>
                   <option v-for="guest in guests" :key="guest.id" :value="guest.id">
                     {{ guest.name }}
                   </option>
@@ -31,14 +31,14 @@
               </div>
 
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Room</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{{ $t('room_label') }}</label>
                 <select
                   :value="form.room_id"
                   @input="$emit('update:form', 'room_id', $event.target.value)"
                   :disabled="isLoadingRooms || isSaving"
                   class="w-full px-4 py-2.5 bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  <option value="" disabled>{{ isLoadingRooms ? 'Loading rooms...' : form.check_in && form.check_out ? 'Select available room' : 'Select room' }}</option>
+                  <option value="" disabled>{{ isLoadingRooms ? $t('loading_rooms') : form.check_in && form.check_out ? $t('select_available_room') : $t('select_room') }}</option>
                   <option
                     v-for="room in availableRooms"
                     :key="room.id"
@@ -50,18 +50,18 @@
                 <p v-if="form.check_in && form.check_out && availableRooms.length === 0"
                    class="text-xs text-orange-500 dark:text-orange-400 mt-1 flex items-center gap-1">
                   <span class="material-symbols-outlined text-sm">info</span>
-                  No available rooms for the selected dates
+                  {{ $t('no_available_rooms') }}
                 </p>
                 <p v-if="!form.check_in || !form.check_out"
                    class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                  Select check-in and check-out dates to see available rooms
+                  {{ $t('select_dates_hint') }}
                 </p>
               </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Check-in Date</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{{ $t('check_in_date') }}</label>
                 <input
                   type="date"
                   :value="form.check_in"
@@ -71,7 +71,7 @@
                 />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Check-out Date</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{{ $t('check_out_date') }}</label>
                 <input
                   type="date"
                   :value="form.check_out"
@@ -84,54 +84,33 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Status</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{{ $t('status_header') }}</label>
                 <select
                   :value="form.status"
                   @input="$emit('update:form', 'status', $event.target.value)"
                   :disabled="isSaving"
                   class="w-full px-4 py-2.5 bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition disabled:opacity-60"
                 >
-                  <option value="Pending">Pending</option>
-                  <option value="Confirmed">Confirmed</option>
-                  <option value="Checked In">Checked In</option>
-                  <option value="Checked Out">Checked Out</option>
-                  <option value="Cancelled">Cancelled</option>
+                  <option value="Pending">{{ $t('pending') }}</option>
+                  <option value="Confirmed">{{ $t('confirmed') }}</option>
+                  <option value="Checked In">{{ $t('checked_in_status') }}</option>
+                  <option value="Checked Out">{{ $t('checked_out_status') }}</option>
+                  <option value="Cancelled">{{ $t('cancelled') }}</option>
                 </select>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Payment</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{{ $t('payment_label') }}</label>
                 <select
                   :value="form.payment_status"
                   @input="$emit('update:form', 'payment_status', $event.target.value)"
                   :disabled="isSaving"
                   class="w-full px-4 py-2.5 bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition disabled:opacity-60"
                 >
-                  <option value="">Cash</option>
-                  <option value="card">Card</option>
-                  <option value="bank_transfer">Bank Transfer</option>
-                  <option value="digital_wallet">Digital Wallet</option>
+                  <option value="">{{ $t('cash') }}</option>
+                  <option value="card">{{ $t('card') }}</option>
+                  <option value="bank_transfer">{{ $t('bank_transfer') }}</option>
+                  <option value="digital_wallet">{{ $t('digital_wallet') }}</option>
                 </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="lg:col-span-1">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Payment Card</label>
-            <div class="p-4 bg-gray-50 dark:bg-slate-700 rounded-lg">
-              <div class="flex items-center justify-between gap-4">
-                <div>
-                  <p v-if="form.total" class="text-sm text-gray-700 dark:text-gray-300 mt-2">
-                    Amount: <span class="font-semibold">${{ parseFloat(form.total).toFixed(2) }}</span>
-                  </p>
-                </div>
-              </div>
-
-              <div class="mt-4 flex justify-center">
-                <img
-                  :src="qrCodeImage"
-                  alt="Payment QR Code"
-                  class="rounded-lg bg-white p-2"
-                />
               </div>
             </div>
           </div>
@@ -145,7 +124,7 @@
           @click="$emit('close')"
           :disabled="isSaving"
         >
-          Cancel
+          {{ $t('cancel') }}
         </button>
         <button
           type="button"
@@ -154,7 +133,7 @@
           :disabled="isSaving || !isValid"
         >
           <span v-if="isSaving" class="animate-spin material-symbols-outlined">refresh</span>
-          {{ isSaving ? 'Updating...' : 'Update Reservation' }}
+          {{ isSaving ? $t('updating') : $t('update_reservation') }}
         </button>
       </div>
     </div>
@@ -162,8 +141,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import qrCodeImage from '../../assets/QRcode.JPG'
+import { ref, onMounted, computed, watch } from 'vue'
 
 const props = defineProps({
   form: Object,

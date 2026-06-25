@@ -10,10 +10,10 @@
         <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
           <div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              <span v-if="actionType === 'delete'">Delete Role</span>
-              <span v-else>Confirm Action</span>
+              <span v-if="actionType === 'delete'">{{ $t('delete_role') }}</span>
+              <span v-else>{{ $t('confirm_action') }}</span>
             </h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400">This action cannot be undone</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('cannot_be_undone') }}</p>
           </div>
           <button @click="closeModal" class="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
             <span class="material-symbols-outlined text-xl">close</span>
@@ -32,15 +32,14 @@
           <!-- Message -->
           <div class="text-center mb-6">
             <p class="text-gray-700 dark:text-gray-300 mb-2">
-              <span v-if="actionType === 'delete'">
-                Are you sure you want to permanently delete the role "<strong>{{ role?.name }}</strong>"?
+              <span v-if="actionType === 'delete'" v-html="$t('delete_role_confirm', { role_name: role?.name })">
               </span>
               <span v-else>
-                Are you sure you want to perform this action?
+                {{ $t('confirm_action_message') }}
               </span>
             </p>
             <p class="text-sm text-gray-500 dark:text-gray-400" v-if="role?.user_count > 0">
-              ⚠️ This role is assigned to {{ role.user_count }} users. They will lose access if you proceed.
+              {{ $t('role_assigned_warning', { count: role.user_count }) }}
             </p>
           </div>
 
@@ -51,7 +50,7 @@
               @click="closeModal"
               class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
             >
-              Cancel
+              {{ $t('cancel') }}
             </button>
             <button
               type="button"
@@ -64,11 +63,11 @@
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Processing...
+                {{ $t('processing') }}
               </span>
               <span v-else>
-                <span v-if="actionType === 'delete'">Delete</span>
-                <span v-else>Confirm</span>
+                <span v-if="actionType === 'delete'">{{ $t('delete') }}</span>
+                <span v-else>{{ $t('confirm') }}</span>
               </span>
             </button>
           </div>
@@ -82,6 +81,9 @@
 import { ref } from 'vue'
 import request from '@/util/request'
 import { showToast } from '@/util/toast'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 const props = defineProps({
   isOpen: Boolean,
   role: Object,
@@ -108,7 +110,7 @@ const confirmAction = async () => {
     await request(`/role/${props.role.id}`, 'DELETE')
     emit('confirmed')
     closeModal()
-    showToast('Role deleted successfully', 'success')
+    showToast(t('role_deleted_successfully'), 'success')
   } catch (error) {
     console.error('Error details:', {
       message: error.message,
@@ -117,7 +119,7 @@ const confirmAction = async () => {
       config: error.config
     })
     
-    const errorMessage = error.response?.data?.message || error.message || `Failed to ${props.actionType} role`
+    const errorMessage = error.response?.data?.message || error.message || t('failed_to_action_role', { action: props.actionType })
     showToast(errorMessage, 'error')
   } finally {
     isSubmitting.value = false

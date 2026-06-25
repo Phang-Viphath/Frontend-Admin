@@ -2,15 +2,15 @@
   <div class="space-y-6">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Users Roles</h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Assign roles to users</p>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('users_roles_title') }}</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ $t('assign_roles_to_users') }}</p>
       </div>
 
       <button @click="openAddModal"
         :disabled="isLoading || isSaving || deletingKey !== null"
         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm">
         <span class="material-symbols-outlined">add</span>
-        Add New Assignment
+        {{ $t('add_new_assignment') }}
       </button>
     </div>
 
@@ -18,7 +18,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="relative">
           <span class="material-symbols-outlined absolute left-3 top-2 text-gray-400">search</span>
-          <input v-model="searchQuery" type="text" placeholder="Search user / role..."
+          <input v-model="searchQuery" type="text" :placeholder="$t('search_user_role')"
             :disabled="isLoading || isSaving || deletingKey !== null"
             class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed" />
         </div>
@@ -26,15 +26,15 @@
         <select v-model="userFilter" 
           :disabled="isLoading || isSaving || deletingKey !== null"
           class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-50 disabled:cursor-not-allowed">
-          <option value="all">All Users</option>
+          <option value="all">{{ $t('all_users') }}</option>
           <option v-for="u in users" :key="u.id" :value="String(u.id)">{{ u.name }} ({{ u.email }})</option>
         </select>
 
         <select v-model="sortBy" 
           :disabled="isLoading || isSaving || deletingKey !== null"
           class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-50 disabled:cursor-not-allowed">
-          <option value="user">Sort by User</option>
-          <option value="role">Sort by Role</option>
+          <option value="user">{{ $t('sort_by_user') }}</option>
+          <option value="role">{{ $t('sort_by_role') }}</option>
         </select>
       </div>
     </div>
@@ -44,7 +44,7 @@
       <div v-if="isLoading" class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-end bg-gray-50/50 dark:bg-[#2d3b4e]/50">
         <span class="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
           <span class="material-symbols-outlined animate-spin text-[16px] text-blue-600">progress_activity</span>
-          Loading assignments...
+          {{ $t('loading_assignments') }}
         </span>
       </div>
 
@@ -52,10 +52,10 @@
         <table class="w-full text-sm">
           <thead class="bg-gray-50 dark:bg-[#2d3b4e] text-gray-600 dark:text-gray-300">
             <tr>
-              <th class="px-6 py-4 text-left">User</th>
-              <th class="px-6 py-4 text-left">Role</th>
-              <th class="px-6 py-4 text-left">Role Status</th>
-              <th class="px-6 py-4 text-center">Actions</th>
+              <th class="px-6 py-4 text-left">{{ $t('user') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('role_singular') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('role_status') }}</th>
+              <th class="px-6 py-4 text-center">{{ $t('actions') }}</th>
             </tr>
           </thead>
           <tbody class="divide-y dark:divide-gray-700">
@@ -111,7 +111,7 @@
                   <span class="px-3 py-1 rounded-full text-xs capitalize" :class="Number(row.role_status) === 1
                     ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
                     : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'">
-                    {{ Number(row.role_status) === 1 ? 'active' : 'inactive' }}
+                    {{ Number(row.role_status) === 1 ? $t('active') : $t('inactive') }}
                   </span>
                 </td>
                 <td class="px-6 py-4 text-center">
@@ -134,7 +134,7 @@
                 <td colspan="4" class="text-center py-16">
                   <div class="flex flex-col items-center justify-center">
                     <span class="material-symbols-outlined text-6xl text-gray-300 dark:text-gray-600 mb-4">admin_panel_settings</span>
-                    <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">No assignments found</p>
+                    <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">{{ $t('no_assignments_found') }}</p>
                   </div>
                 </td>
               </tr>
@@ -144,7 +144,7 @@
       </div>
 
       <div v-if="!isLoading && filteredRows.length > 0" class="flex justify-between items-center px-6 py-4 border-t dark:border-gray-700 bg-gray-50/50 dark:bg-[#2d3b4e]/50">
-        <p class="text-sm text-gray-500">Total: {{ filteredRows.length }} assignments</p>
+        <p class="text-sm text-gray-500">{{ $t('total_assignments', { total: filteredRows.length }) }}</p>
       </div>
     </div>
 
@@ -152,9 +152,7 @@
       <div
         class="w-full max-w-lg rounded-xl bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-700 shadow-lg">
         <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ formMode === 'create' ? 'Add Assignment'
-            :
-            'Edit Assignment' }}</h3>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ formMode === 'create' ? $t('add_assignment') : $t('edit_assignment') }}</h3>
           <button :disabled="isSaving" @click="closeAllModals"
             class="p-2 rounded hover:bg-gray-100 dark:hover:bg-[#2d3b4e] disabled:opacity-60 disabled:cursor-not-allowed">
             <span class="material-symbols-outlined">close</span>
@@ -163,19 +161,19 @@
 
         <div class="px-6 py-5 space-y-4">
           <div>
-            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">User</label>
+            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('user') }}</label>
             <select v-model="form.user_id"
               class="mt-1 w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] outline-none">
-              <option value="">Select User</option>
+              <option value="">{{ $t('select_user') }}</option>
               <option v-for="u in users" :key="u.id" :value="String(u.id)">{{ u.name }} ({{ u.email }})</option>
             </select>
           </div>
 
           <div>
-            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
+            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('role_singular') }}</label>
             <select v-model="form.role_id"
               class="mt-1 w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] outline-none">
-              <option value="">Select Role</option>
+              <option value="">{{ $t('select_role') }}</option>
               <option v-for="r in roles" :key="r.id" :value="String(r.id)">{{ r.name }} ({{ r.code }})</option>
             </select>
           </div>
@@ -186,12 +184,12 @@
         <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
           <button :disabled="isSaving" @click="closeAllModals"
             class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] hover:bg-gray-200 dark:hover:bg-[#334155] disabled:opacity-60 disabled:cursor-not-allowed">
-            Cancel
+            {{ $t('cancel') }}
           </button>
           <button :disabled="isSaving || !isFormValid" @click="submitForm"
             class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2">
             <span v-if="isSaving" class="material-symbols-outlined animate-spin">refresh</span>
-            {{ formMode === 'create' ? 'Create' : 'Update' }}
+            {{ formMode === 'create' ? $t('create_btn') : $t('update') }}
           </button>
         </div>
       </div>
@@ -201,11 +199,11 @@
       <div
         class="w-full max-w-md rounded-xl bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-700 shadow-lg">
         <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Delete Assignment</h3>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $t('delete_assignment') }}</h3>
         </div>
 
         <div class="px-6 py-5 space-y-2">
-          <p class="text-sm text-gray-600 dark:text-gray-300">Are you sure you want to remove this role from the user?
+          <p class="text-sm text-gray-600 dark:text-gray-300">{{ $t('remove_role_confirm') }}
           </p>
           <p class="text-sm font-mono text-gray-800 dark:text-gray-100">{{ selectedRowLabel }}</p>
           <p v-if="deleteError" class="text-sm text-red-600 dark:text-red-400">{{ deleteError }}</p>
@@ -214,12 +212,12 @@
         <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
           <button :disabled="deletingKey !== null" @click="closeAllModals"
             class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] hover:bg-gray-200 dark:hover:bg-[#334155] disabled:opacity-60 disabled:cursor-not-allowed">
-            Cancel
+            {{ $t('cancel') }}
           </button>
           <button :disabled="deletingKey !== null" @click="confirmDelete"
             class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2">
             <span v-if="deletingKey !== null" class="material-symbols-outlined animate-spin">refresh</span>
-            Delete
+            {{ $t('delete') }}
           </button>
         </div>
       </div>

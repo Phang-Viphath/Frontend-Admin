@@ -3,8 +3,8 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Rooms</h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage room inventory, status, and details</p>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('rooms_title') }}</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ $t('manage_room_inventory') }}</p>
       </div>
       <button 
         @click="openModal(null)"
@@ -13,7 +13,7 @@
       >
         <span v-if="isSaving" class="animate-spin material-symbols-outlined">refresh</span>
         <span v-else class="material-symbols-outlined text-xl">add</span>
-        Add New Room
+        {{ $t('add_new_room') }}
       </button>
     </div>
 
@@ -37,7 +37,7 @@
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Rooms</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ $t('total_rooms') }}</p>
             <p class="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{{ rooms.length }}</p>
           </div>
           <div class="p-3 rounded-lg bg-blue-100 dark:bg-blue-900/30">
@@ -49,7 +49,7 @@
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Available</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ $t('available') }}</p>
             <p class="text-3xl font-bold text-green-600 dark:text-green-400 mt-2">{{ roomStats.available }}</p>
           </div>
           <div class="p-3 rounded-lg bg-green-100 dark:bg-green-900/30">
@@ -61,7 +61,7 @@
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Occupied</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ $t('occupied') }}</p>
             <p class="text-3xl font-bold text-yellow-600 dark:text-yellow-400 mt-2">{{ roomStats.occupied }}</p>
           </div>
           <div class="p-3 rounded-lg bg-yellow-100 dark:bg-yellow-900/30">
@@ -73,7 +73,7 @@
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Maintenance</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ $t('maintenance') }}</p>
             <p class="text-3xl font-bold text-orange-600 dark:text-orange-400 mt-2">{{ roomStats.maintenance }}</p>
           </div>
           <div class="p-3 rounded-lg bg-orange-100 dark:bg-orange-900/30">
@@ -92,7 +92,7 @@
             v-model="searchQuery"
             type="text"
             :disabled="isLoading || isSaving"
-            placeholder="Search by room number, type..."
+            :placeholder="$t('search_by_room_number')"
             class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all disabled:opacity-60"
           />
         </div>
@@ -102,11 +102,11 @@
           :disabled="isLoading || isSaving"
           class="px-4 py-2.5 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-60"
         >
-          <option value="all">All Status</option>
-          <option value="available">Available</option>
-          <option value="occupied">Occupied</option>
-          <option value="cleaning">Cleaning</option>
-          <option value="maintenance">Maintenance</option>
+          <option value="all">{{ $t('all_status') }}</option>
+          <option value="available">{{ $t('available') }}</option>
+          <option value="occupied">{{ $t('occupied') }}</option>
+          <option value="cleaning">{{ $t('cleaning') }}</option>
+          <option value="maintenance">{{ $t('maintenance') }}</option>
         </select>
 
         <select 
@@ -114,12 +114,12 @@
           :disabled="isLoading || isSaving"
           class="px-4 py-2.5 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-60"
         >
-          <option value="all">All Types</option>
-          <option value="Standard">Standard</option>
-          <option value="Deluxe">Deluxe</option>
-          <option value="Suite">Suite</option>
-          <option value="Family">Family</option>
-          <option value="Executive">Executive</option>
+          <option value="all">{{ $t('all_types') }}</option>
+          <option value="Standard">{{ $t('room_standard') }}</option>
+          <option value="Deluxe">{{ $t('room_deluxe') }}</option>
+          <option value="Suite">{{ $t('room_suite') }}</option>
+          <option value="Family">{{ $t('room_family') }}</option>
+          <option value="Executive">{{ $t('room_executive') }}</option>
         </select>
 
         <select 
@@ -127,12 +127,12 @@
           :disabled="isLoading || isSaving"
           class="px-4 py-2.5 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-60"
         >
-          <option value="all">All Floors</option>
-          <option value="1st Floor">Floor 1</option>
-          <option value="2nd Floor">Floor 2</option>
-          <option value="3rd Floor">Floor 3</option>
-          <option value="4th Floor">Floor 4</option>
-          <option value="5th Floor">Floor 5</option>
+          <option value="all">{{ $t('all_floors') }}</option>
+          <option value="1st Floor">{{ $t('floor_n', { n: 1 }) }}</option>
+          <option value="2nd Floor">{{ $t('floor_n', { n: 2 }) }}</option>
+          <option value="3rd Floor">{{ $t('floor_n', { n: 3 }) }}</option>
+          <option value="4th Floor">{{ $t('floor_n', { n: 4 }) }}</option>
+          <option value="5th Floor">{{ $t('floor_n', { n: 5 }) }}</option>
         </select>
       </div>
     </div>
@@ -188,9 +188,9 @@
         <div class="p-5">
           <div class="flex justify-between items-start">
             <div>
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ room.number }} - {{ room.type }}</h3>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ room.number }} - {{ $t(`room_${room.type.toLowerCase()}`) || room.type }}</h3>
               <p class="text-sm text-gray-500 dark:text-gray-400">
-                {{ formatFloor(room.floor) }} • {{ room.capacity }} guests
+                {{ formatFloor(room.floor) }} • {{ room.capacity }} {{ $t('guests_count') }}
               </p>
             </div>
             <span
@@ -202,13 +202,13 @@
               }"
               class="px-3 py-1 text-xs font-medium rounded-full capitalize"
             >
-              {{ room.status }}
+              {{ $t(room.status) || room.status }}
             </span>
           </div>
 
           <div class="mt-4 flex justify-between items-center">
             <div>
-              <p class="text-sm text-gray-600 dark:text-gray-400">Price / night</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">{{ $t('price_per_night') }}</p>
               <p class="text-xl font-bold text-gray-900 dark:text-gray-100">${{ room.price }}</p>
             </div>
             <div class="flex gap-2">
@@ -237,15 +237,15 @@
     <!-- Empty State -->
     <div v-if="!isLoading && filteredRooms.length === 0" class="text-center py-12">
       <span class="material-symbols-outlined text-6xl text-gray-400">bed</span>
-      <h3 class="mt-4 text-lg font-medium text-gray-900 dark:text-gray-100">No rooms found</h3>
-      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Try adjusting your filters or add a new room.</p>
+      <h3 class="mt-4 text-lg font-medium text-gray-900 dark:text-gray-100">{{ $t('no_rooms_found') }}</h3>
+      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ $t('try_adjusting_filters_or_add_room') }}</p>
     </div>
 
     <!-- Stats Loading Indicator -->
     <div v-if="isLoading" class="text-center py-4">
       <div class="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
         <span class="animate-spin material-symbols-outlined text-base">refresh</span>
-        Loading room statistics...
+        {{ $t('loading_room_statistics') }}
       </div>
     </div>
 
@@ -253,9 +253,9 @@
     <RoomFormModal ref="roomFormModal" @saved="fetchRooms" @saving="setSaving" />
     <ConfirmModalDelete 
       ref="confirmModalDelete"
-      title="Delete Room"
-      message="Are you sure you want to delete this room? This action cannot be undone."
-      confirm-text="Delete Room"
+      :title="$t('delete_room')"
+      :message="$t('delete_room_confirm')"
+      :confirm-text="$t('delete_room')"
     />
   </div>
 </template>

@@ -2,14 +2,14 @@
   <div class="space-y-6">
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Reservations</h1>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('reservations') }}</h1>
       <button
         class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
         @click="openCreate"
         :disabled="isLoading || isSaving"
       >
         <span class="material-symbols-outlined mr-2 text-xl">add</span>
-        New Reservation
+        {{ $t('new_reservation') }}
       </button>
     </div>
 
@@ -63,7 +63,7 @@
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Search guest, room, ID..."
+            :placeholder="$t('search_guest_room_id')"
             :disabled="isLoading"
             class="w-full pl-11 pr-4 py-2.5 bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none disabled:opacity-60 transition"
           />
@@ -76,12 +76,12 @@
         >
         <!-- Paid -->
          <!-- failed -->
-          <option value="all">All Statuses</option>
-          <option value="confirmed">Confirmed</option>
-          <option value="pending">Pending</option>
-          <option value="checked-in">Checked In</option>
-          <option value="checked-out">Checked Out</option>
-          <option value="cancelled">Cancelled</option>
+          <option value="all">{{ $t('all_statuses') }}</option>
+          <option value="confirmed">{{ $t('status_confirmed') }}</option>
+          <option value="pending">{{ $t('status_pending') }}</option>
+          <option value="checked-in">{{ $t('status_checked_in') }}</option>
+          <option value="checked-out">{{ $t('status_checked_out') }}</option>
+          <option value="cancelled">{{ $t('status_cancelled') }}</option>
         </select>
 
         <input
@@ -115,64 +115,76 @@
     />
 
     <div v-if="isPaymentOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div class="absolute inset-0 bg-black/60" @click="closePayment" />
+      <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="closePayment" />
       <div
-        class="relative w-full max-w-md rounded-2xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-xl overflow-hidden"
+        class="relative w-full max-w-md rounded-xl bg-[#1A1A1A] text-white shadow-2xl overflow-hidden font-sans border border-[#333]"
       >
-        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-slate-700">
-          <div>
-            <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">Bakong Payment</div>
-            <div class="text-xs text-gray-500 dark:text-gray-400">Reservation #{{ paymentReservation?.id }}</div>
+        <!-- Header -->
+        <div class="flex items-center justify-between px-5 py-4 bg-[#E51220]">
+          <div class="flex items-center gap-3">
+             <span class="material-symbols-outlined text-white text-3xl">phone_iphone</span>
+             <div class="leading-none">
+               <div class="text-base font-bold text-white tracking-wide">KHQR PAY / បង់តាម KHQR</div>
+               <div class="text-[10px] font-semibold text-white/90 tracking-widest mt-0.5">BAKONG INSTANT SETTLEMENT</div>
+             </div>
           </div>
           <button
             type="button"
-            class="inline-flex items-center justify-center size-9 rounded-lg border border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700/50"
+            class="inline-flex items-center justify-center size-8 rounded-full bg-black/20 hover:bg-black/40 text-white transition-colors"
             @click="closePayment"
           >
-            <span class="material-symbols-outlined">close</span>
+            <span class="material-symbols-outlined text-xl">close</span>
           </button>
         </div>
 
-        <div class="p-5 space-y-4">
-          <div class="rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900/40 p-4">
-            <div class="flex items-center justify-between text-sm">
-              <span class="text-gray-600 dark:text-gray-400">Amount</span>
-              <span class="font-semibold text-gray-900 dark:text-gray-100">${{ paymentAmount }}</span>
+        <div class="p-6">
+          <!-- Toggle KHQR / Bakong Merchant -->
+          <div class="flex justify-center items-center gap-4 mb-6 text-sm font-semibold tracking-wide">
+            <div class="flex items-center gap-2 px-4 py-1.5 bg-white rounded-full text-[#E51220]">
+               <div class="w-2.5 h-2.5 rounded-full bg-[#E51220] animate-pulse"></div>
+               KHQR
+            </div>
+            <div class="w-px h-4 bg-gray-600"></div>
+            <div class="text-[#E2A63B]">BAKONG MERCHANT</div>
+          </div>
+
+          <!-- QR Code Container -->
+          <div class="flex justify-center mb-6">
+            <div class="p-1 border border-[#E51220] rounded relative bg-transparent">
+              <div class="p-1 bg-white">
+                <div v-if="paymentLoading" class="w-[220px] h-[220px] flex items-center justify-center text-gray-800 font-medium">{{ $t('generating_qr') }}</div>
+                <div v-else-if="paymentError" class="w-[220px] h-[220px] flex items-center justify-center text-red-600 text-center font-medium">{{ paymentError }}</div>
+                <img v-else-if="paymentQrUrl" :src="paymentQrUrl" alt="Payment QR" class="w-[220px] h-[220px]" />
+                <div v-else class="w-[220px] h-[220px] flex items-center justify-center text-gray-800 font-medium">{{ $t('qr_unavailable') }}</div>
+              </div>
             </div>
           </div>
 
-          <div class="rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900/20 p-4">
-            <div v-if="paymentLoading" class="text-center text-sm text-gray-600 dark:text-gray-400">Generating QR...</div>
-            <div v-else-if="paymentError" class="text-center text-sm text-red-600">{{ paymentError }}</div>
-            <img v-else-if="paymentQrUrl" :src="paymentQrUrl" alt="Payment QR" class="w-full rounded-lg" />
-            <div v-else class="text-center text-sm text-gray-600 dark:text-gray-400">QR unavailable</div>
+          <!-- Payment Details -->
+          <div class="rounded border border-[#333] bg-[#111] p-5 space-y-3 mb-6">
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-gray-400">Merchant / អាជីវករ:</span>
+              <span class="font-semibold text-[#E2A63B]">PhathDev</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-gray-400">Bakong Account ID:</span>
+              <span class="font-semibold text-[#E2A63B] font-mono text-xs">phath_dev@bkrt</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-gray-400">Order Ref. ID:</span>
+              <span class="font-semibold text-[#E2A63B] font-mono text-xs">ORD-{{ paymentReservation?.id }}</span>
+            </div>
+            <div class="h-px w-full bg-[#333] my-3"></div>
+            <div class="flex items-center justify-between">
+              <span class="text-[#E2A63B] font-semibold">Total / ទឹកប្រាក់សរុប:</span>
+              <span class="font-bold text-[#E51220] text-xl">${{ paymentAmount }} USD</span>
+            </div>
           </div>
 
-          <div v-if="paymentPaid" class="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
-            Paid verified. Reservation confirmed.
-          </div>
-
-          <div v-if="paymentVerifying" class="text-xs text-gray-500 dark:text-gray-400">
-            Auto verifying transaction...
-          </div>
-
-          <div class="flex gap-3">
-            <button
-              type="button"
-              class="flex-1 inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:opacity-60"
-              :disabled="paymentLoading || paymentVerifying || paymentPaid || !paymentMd5"
-              @click="verifyNow"
-            >
-              {{ paymentVerifying ? 'Verifying...' : 'Verify Now' }}
-            </button>
-            <button
-              type="button"
-              class="flex-1 inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-60"
-              :disabled="paymentLoading || paymentVerifying || paymentPaid"
-              @click="cancelPaymentReservation"
-            >
-              Cancel
-            </button>
+          <!-- Timer -->
+          <div class="flex items-center justify-center gap-2 text-sm text-gray-400 mb-6 font-medium">
+             <span class="material-symbols-outlined text-lg">schedule</span>
+             <span>QR expires in: <span class="text-[#E51220] font-mono">{{ formattedPaymentTimeLeft }}</span></span>
           </div>
         </div>
       </div>
@@ -180,9 +192,9 @@
 
     <ConfirmModalDelete
       ref="confirmDeleteModal"
-      title="Cancel Reservation"
-      message="This action cannot be undone. Are you sure you want to cancel this reservation?"
-      confirmText="Yes, Cancel Reservation"
+      :title="$t('cancel_reservation')"
+      :message="$t('cancel_reservation_confirm')"
+      :confirmText="$t('yes_cancel_reservation')"
       confirmClass="bg-red-600 hover:bg-red-700"
       :disabled="isSaving"
     />
@@ -231,6 +243,36 @@ const paymentVerifying = ref(false)
 const paymentPaid = ref(false)
 let paymentPollId = null
 
+const paymentTimeLeft = ref(295)
+let paymentTimerInterval = null
+
+const formattedPaymentTimeLeft = computed(() => {
+  const m = Math.floor(paymentTimeLeft.value / 60).toString().padStart(2, '0')
+  const s = (paymentTimeLeft.value % 60).toString().padStart(2, '0')
+  return `${m}:${s}`
+})
+
+const startPaymentTimer = () => {
+  clearInterval(paymentTimerInterval)
+  paymentTimeLeft.value = 295
+  paymentTimerInterval = setInterval(() => {
+    if (paymentTimeLeft.value > 0) {
+      paymentTimeLeft.value--
+    } else {
+      clearInterval(paymentTimerInterval)
+    }
+  }, 1000)
+}
+
+const simulateScan = () => {
+  paymentPaid.value = true
+  showToast('Payment simulated successfully!', 'success')
+  setTimeout(() => {
+    closePayment()
+    loadReservations()
+  }, 2000)
+}
+
 const clearPaymentPoll = () => {
   if (paymentPollId) {
     clearInterval(paymentPollId)
@@ -248,6 +290,7 @@ const closePayment = () => {
   paymentVerifying.value = false
   paymentPaid.value = false
   clearPaymentPoll()
+  clearInterval(paymentTimerInterval)
 }
 
 const openPayment = async (reservation) => {
@@ -268,6 +311,7 @@ const openPayment = async (reservation) => {
     if (!khqr) throw new Error('Missing KHQR string from server.')
     paymentQrUrl.value = await QRCode.toDataURL(khqr, { errorCorrectionLevel: 'M', margin: 1, width: 420 })
     startPaymentPolling()
+    startPaymentTimer()
   } catch (e) {
     paymentError.value = e?.response?.data?.message || e?.message || 'Failed to generate QR.'
   } finally {

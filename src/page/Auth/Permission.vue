@@ -2,8 +2,8 @@
   <div class="space-y-6">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Permission</h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage permissions and access controls</p>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('permission') }}</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ $t('manage_permissions') }}</p>
       </div>
 
       <button
@@ -12,7 +12,7 @@
         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
       >
         <span class="material-symbols-outlined">add</span>
-        Add New Permission
+        {{ $t('add_new_permission') }}
       </button>
     </div>
 
@@ -23,7 +23,7 @@
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Search permission name, group, route..."
+            :placeholder="$t('search_permission_placeholder')"
             :disabled="isLoading || isSaving || deletingId !== null"
             class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           />
@@ -31,14 +31,14 @@
 
         <select v-model="menuFilter" :disabled="isLoading || isSaving || deletingId !== null" class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-50 disabled:cursor-not-allowed">
           <option value="all">All</option>
-          <option value="menu">Menu Web</option>
-          <option value="not_menu">Not Menu</option>
+          <option value="menu">{{ $t('menu_web') }}</option>
+          <option value="not_menu">{{ $t('not_menu') }}</option>
         </select>
 
         <select v-model="sortBy" :disabled="isLoading || isSaving || deletingId !== null" class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-50 disabled:cursor-not-allowed">
-          <option value="name">Sort by Name</option>
-          <option value="group">Sort by Group</option>
-          <option value="created_at">Sort by Created Date</option>
+          <option value="name">{{ $t('sort_by_name') }}</option>
+          <option value="group">{{ $t('sort_by_group') }}</option>
+          <option value="created_at">{{ $t('sort_by_created_date') }}</option>
         </select>
       </div>
     </div>
@@ -48,7 +48,7 @@
       <div v-if="isLoading" class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-end bg-gray-50/50 dark:bg-[#2d3b4e]/50">
         <span class="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
           <span class="material-symbols-outlined animate-spin text-[16px] text-blue-600">progress_activity</span>
-          Loading permissions...
+          {{ $t('loading_permissions') }}
         </span>
       </div>
 
@@ -56,12 +56,12 @@
         <table class="w-full text-sm">
           <thead class="bg-gray-50 dark:bg-[#2d3b4e] text-gray-600 dark:text-gray-300">
             <tr>
-              <th class="px-6 py-4 text-left">ID</th>
-              <th class="px-6 py-4 text-left">Name</th>
-              <th class="px-6 py-4 text-left">Group</th>
-              <th class="px-6 py-4 text-left">Menu Web</th>
-              <th class="px-6 py-4 text-left">Web Route Key</th>
-              <th class="px-6 py-4 text-center">Actions</th>
+              <th class="px-6 py-4 text-left">{{ $t('id') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('name_header') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('group') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('menu_web') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('web_route_key') }}</th>
+              <th class="px-6 py-4 text-center">{{ $t('actions') }}</th>
             </tr>
           </thead>
           <tbody class="divide-y dark:divide-gray-700">
@@ -98,7 +98,7 @@
                     class="px-3 py-1 rounded-full text-xs"
                     :class="p.is_menu_web ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200'"
                   >
-                    {{ p.is_menu_web ? 'Yes' : 'No' }}
+                    {{ p.is_menu_web ? $t('yes') : $t('no') }}
                   </span>
                 </td>
                 <td class="px-6 py-4">
@@ -130,7 +130,7 @@
                 <td colspan="8" class="text-center py-16">
                   <div class="flex flex-col items-center justify-center">
                     <span class="material-symbols-outlined text-6xl text-gray-300 dark:text-gray-600 mb-4">admin_panel_settings</span>
-                    <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">No permissions found</p>
+                    <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">{{ $t('no_permissions_found') }}</p>
                   </div>
                 </td>
               </tr>
@@ -140,14 +140,14 @@
       </div>
 
       <div v-if="!isLoading && filteredPermissions.length > 0" class="flex justify-between items-center px-6 py-4 border-t dark:border-gray-700 bg-gray-50/50 dark:bg-[#2d3b4e]/50">
-        <p class="text-sm text-gray-500">Total: {{ totalPermissions }} permissions</p>
+        <p class="text-sm text-gray-500">{{ $t('total_permissions', { total: totalPermissions }) }}</p>
       </div>
     </div>
 
     <div v-if="showFormModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div class="w-full max-w-lg rounded-xl bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-700 shadow-lg">
         <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ formMode === 'create' ? 'Add Permission' : 'Edit Permission' }}</h3>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ formMode === 'create' ? $t('add_permission') : $t('edit_permission') }}</h3>
           <button
             :disabled="isSaving"
             @click="closeAllModals"
@@ -159,43 +159,43 @@
 
         <div class="px-6 py-5 space-y-4">
           <div>
-            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('name') }}</label>
             <input
               v-model="form.name"
               type="text"
               class="mt-1 w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] outline-none"
-              placeholder="e.g. reservations.view"
+              :placeholder="$t('eg_reservations_view')"
             />
           </div>
 
           <div>
-            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Group</label>
+            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('group') }}</label>
             <input
               v-model="form.group"
               type="text"
               class="mt-1 w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] outline-none"
-              placeholder="e.g. Reservations"
+              :placeholder="$t('eg_reservations')"
             />
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Menu Web</label>
+              <label class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('menu_web') }}</label>
               <select
                 v-model="form.is_menu_web"
                 class="mt-1 w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] outline-none"
               >
-                <option :value="false">No</option>
-                <option :value="true">Yes</option>
+                <option :value="false">{{ $t('no') }}</option>
+                <option :value="true">{{ $t('yes') }}</option>
               </select>
             </div>
             <div>
-              <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Web Route Key</label>
+              <label class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('web_route_key') }}</label>
               <input
                 v-model="form.web_route_key"
                 type="text"
                 class="mt-1 w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] outline-none"
-                placeholder="e.g. reports"
+                :placeholder="$t('eg_reports')"
               />
             </div>
           </div>
@@ -209,7 +209,7 @@
             @click="closeAllModals"
             class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] hover:bg-gray-200 dark:hover:bg-[#334155] disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Cancel
+            {{ $t('cancel') }}
           </button>
           <button
             :disabled="isSaving || !isFormValid"
@@ -217,7 +217,7 @@
             class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2"
           >
             <span v-if="isSaving" class="material-symbols-outlined animate-spin">refresh</span>
-            {{ formMode === 'create' ? 'Create' : 'Update' }}
+            {{ formMode === 'create' ? $t('create_btn') : $t('update') }}
           </button>
         </div>
       </div>
@@ -226,11 +226,11 @@
     <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div class="w-full max-w-md rounded-xl bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-700 shadow-lg">
         <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Delete Permission</h3>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $t('delete_permission') }}</h3>
         </div>
 
         <div class="px-6 py-5 space-y-2">
-          <p class="text-sm text-gray-600 dark:text-gray-300">Are you sure you want to delete this permission?</p>
+          <p class="text-sm text-gray-600 dark:text-gray-300">{{ $t('delete_permission_confirm') }}</p>
           <p class="text-sm font-mono text-gray-800 dark:text-gray-100">{{ selectedPermission?.name }}</p>
           <p v-if="deleteError" class="text-sm text-red-600 dark:text-red-400">{{ deleteError }}</p>
         </div>
@@ -241,7 +241,7 @@
             @click="closeAllModals"
             class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] hover:bg-gray-200 dark:hover:bg-[#334155] disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Cancel
+            {{ $t('cancel') }}
           </button>
           <button
             :disabled="deletingId !== null"
@@ -249,7 +249,7 @@
             class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2"
           >
             <span v-if="deletingId !== null" class="material-symbols-outlined animate-spin">refresh</span>
-            Delete
+            {{ $t('delete') }}
           </button>
         </div>
       </div>

@@ -2,12 +2,12 @@
   <div v-if="showModal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
     <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-lg">
       <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-        <h2 class="text-xl font-bold">{{ isEditMode ? 'Edit Guest' : 'Add New Guest' }}</h2>
+        <h2 class="text-xl font-bold">{{ isEditMode ? $t('edit_guest') : $t('add_new_guest') }}</h2>
       </div>
 
       <div class="p-6 space-y-5">
         <div>
-          <label class="block text-sm font-medium mb-1">Full Name *</label>
+          <label class="block text-sm font-medium mb-1">{{ $t('full_name') }} *</label>
           <input
             v-model="form.name"
             type="text"
@@ -20,7 +20,7 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium mb-1">Email *</label>
+          <label class="block text-sm font-medium mb-1">{{ $t('email') }} *</label>
           <input
             v-model="form.email"
             type="email"
@@ -32,7 +32,7 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium mb-1">Phone</label>
+          <label class="block text-sm font-medium mb-1">{{ $t('phone_label') }}</label>
           <input
             v-model="form.phone"
             type="tel"
@@ -42,7 +42,7 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium mb-2">Profile Image</label>
+          <label class="block text-sm font-medium mb-2">{{ $t('profile_image') }}</label>
           <div class="flex items-center gap-4">
             <div class="h-14 w-14 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center border dark:border-gray-600">
               <img v-if="form.imagePreview" :src="form.imagePreview" alt="Preview" class="h-full w-full object-cover" />
@@ -57,7 +57,7 @@
                 @change="handleImageChange"
               />
             </div>
-            <p class="text-xs text-gray-500 mt-1">Max size: 2MB (JPG, PNG, GIF)</p>
+            <p class="text-xs text-gray-500 mt-1">{{ $t('max_image_size_hint') }}</p>
           </div>
         </div>
       </div>
@@ -69,7 +69,7 @@
           :disabled="isSaving"
           class="px-5 py-2.5 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          Cancel
+          {{ $t('cancel') }}
         </button>
         <button
           @click="save"
@@ -77,7 +77,7 @@
           class="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-60 flex items-center gap-2"
         >
           <span v-if="isSaving" class="animate-spin material-symbols-outlined">refresh</span>
-          {{ isEditMode ? 'Update' : 'Save' }}
+          {{ isEditMode ? $t('update') : $t('save') }}
         </button>
       </div>
     </div>
@@ -90,7 +90,9 @@ import request from '@/util/request'
 import { showToast } from '@/util/toast'
 import configurl from '@/util/configurl'
 import { resolveImageUrl } from '@/util/image'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const emit = defineEmits(['saved', 'saving'])
 
 const showModal = ref(false)
@@ -168,14 +170,14 @@ const validateForm = () => {
   let isValid = true
 
   if (!form.value.name?.trim()) {
-    errors.value.name = 'Name is required'
+    errors.value.name = t('name_required')
     isValid = false
   }
   if (!form.value.email?.trim()) {
-    errors.value.email = 'Email is required'
+    errors.value.email = t('email_required_error')
     isValid = false
   } else if (!/\S+@\S+\.\S+/.test(form.value.email)) {
-    errors.value.email = 'Invalid email format'
+    errors.value.email = t('invalid_email_format')
     isValid = false
   }
 
@@ -201,16 +203,16 @@ const save = async () => {
     if (isEditMode.value) {
       formData.append('_method', 'PUT')
       await request(`/guests/${form.value.id}`, 'POST', formData)
-      showToast('Guest updated successfully', 'success')
+      showToast(t('guest_updated_successfully'), 'success')
     } else {
       await request('/guests', 'POST', formData)
-      showToast('Guest created successfully', 'success')
+      showToast(t('guest_created_successfully'), 'success')
     }
 
     close(true)
     emit('saved')
   } catch (error) {
-    showToast(error.response?.data?.message || 'Operation failed', 'error')
+    showToast(error.response?.data?.message || t('operation_failed'), 'error')
   } finally {
     isSaving.value = false
     emit('saving', false)

@@ -4,10 +4,10 @@
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
         <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
-          Users
+          {{ $t('users_title') }}
         </h1>
         <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-          Manage system users, permissions, and access
+          {{ $t('manage_users') }}
         </p>
       </div>
 
@@ -17,7 +17,7 @@
         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
       >
         <span class="material-symbols-outlined">add</span>
-        Add New User
+        {{ $t('add_new_user') }}
       </button>
     </div>
 
@@ -32,7 +32,7 @@
           <input
             v-model="nameQuery"
             type="text"
-            placeholder="Search by name..."
+            :placeholder="$t('search_name')"
             :disabled="isLoading || isSaving"
             class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           />
@@ -46,7 +46,7 @@
           <input
             v-model="emailQuery"
             type="text"
-            placeholder="Search by email..."
+            :placeholder="$t('search_email')"
             :disabled="isLoading || isSaving"
             class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           />
@@ -58,9 +58,9 @@
           :disabled="isLoading || isSaving"
           class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <option value="all">All Verification Status</option>
-          <option value="verified">Verified</option>
-          <option value="unverified">Unverified</option>
+          <option value="all">{{ $t('all_verification_status') }}</option>
+          <option value="verified">{{ $t('verified') }}</option>
+          <option value="unverified">{{ $t('unverified') }}</option>
         </select>
 
         <!-- Sort -->
@@ -69,10 +69,10 @@
           :disabled="isLoading || isSaving"
           class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <option value="name">Sort by Name</option>
-          <option value="email">Sort by Email</option>
-          <option value="created_at">Sort by Created Date</option>
-          <option value="updated_at">Sort by Updated Date</option>
+          <option value="name">{{ $t('sort_by_name') }}</option>
+          <option value="email">{{ $t('sort_by_email') }}</option>
+          <option value="created_at">{{ $t('sort_by_created_date') }}</option>
+          <option value="updated_at">{{ $t('sort_by_updated_date') }}</option>
         </select>
       </div>
     </div>
@@ -83,7 +83,7 @@
       <div v-if="isLoading" class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-end bg-gray-50/50 dark:bg-[#2d3b4e]/50">
         <span class="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
           <span class="material-symbols-outlined animate-spin text-[16px] text-blue-600">progress_activity</span>
-          Loading users...
+          {{ $t('loading_users') }}
         </span>
       </div>
 
@@ -91,13 +91,13 @@
         <table class="w-full text-sm">
           <thead class="bg-gray-50 dark:bg-[#2d3b4e] text-gray-600 dark:text-gray-300">
             <tr>
-              <th class="px-6 py-4 text-left">ID</th>
-              <th class="px-6 py-4 text-left">Name</th>
-              <th class="px-6 py-4 text-left">Email</th>
-              <th class="px-6 py-4 text-left">Email Verified</th>
-              <th class="px-6 py-4 text-left">Created</th>
-              <th class="px-6 py-4 text-left">Updated</th>
-              <th class="px-6 py-4 text-center">Actions</th>
+              <th class="px-6 py-4 text-left">{{ $t('id') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('name_header') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('email') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('email_verified') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('created') }}</th>
+              <th class="px-6 py-4 text-left">{{ $t('updated') }}</th>
+              <th class="px-6 py-4 text-center">{{ $t('actions') }}</th>
             </tr>
           </thead>
 
@@ -136,7 +136,7 @@
               <td colspan="7" class="text-center py-16">
                 <div class="flex flex-col items-center justify-center">
                   <span class="material-symbols-outlined text-6xl text-gray-300 dark:text-gray-600 mb-4">group_off</span>
-                  <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">No users found</p>
+                  <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">{{ $t('no_users_found') }}</p>
                 </div>
               </td>
             </tr>
@@ -176,7 +176,7 @@
                       : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'"
                     class="px-3 py-1 rounded-full text-xs capitalize"
                   >
-                    {{ user.email_verified_at ? 'Verified' : 'Unverified' }}
+                    {{ user.email_verified_at ? $t('verified') : $t('unverified') }}
                   </span>
                 </td>
 
@@ -222,7 +222,7 @@
       <!-- ================= FOOTER ================= -->
       <div v-if="!isLoading && filteredUsers.length > 0" class="flex justify-between items-center px-6 py-4 border-t dark:border-gray-700 bg-gray-50/50 dark:bg-[#2d3b4e]/50">
         <p class="text-sm text-gray-500">
-          Total: {{ totalUsers }} users
+          {{ $t('total_users', { total: totalUsers }) }}
         </p>
       </div>
     </div>

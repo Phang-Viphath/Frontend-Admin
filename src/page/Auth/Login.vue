@@ -1,8 +1,22 @@
 <template>
   <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+    <!-- Top-right Theme/Lang Actions -->
+    <div class="absolute top-4 right-4 flex items-center gap-2">
+      <button @click="languageStore.setLanguage(languageStore.locale === 'en' ? 'km' : 'en')"
+        class="flex items-center justify-center h-10 px-3 rounded-lg text-sm font-semibold bg-green-600/10 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors uppercase">
+        {{ languageStore.locale === 'en' ? 'EN' : 'KH' }}
+      </button>
+      <button @click="themeStore.toggleTheme()"
+        class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+        <span class="material-symbols-outlined text-2xl">
+          {{ themeStore.isDark ? 'dark_mode' : 'light_mode' }}
+        </span>
+      </button>
+    </div>
+
     <div class="w-full max-w-md">
       <div class="rounded-xl bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 p-8">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">Login</h2>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">{{ $t('login') }}</h2>
 
         <!-- Error message -->
         <div v-if="errorMessage" class="mb-6 p-3 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 rounded-lg text-center text-sm">
@@ -12,7 +26,7 @@
         <form @submit.prevent="onLogin" class="space-y-6">
           <!-- Email -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Email</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{{ $t('email') }}</label>
             <div class="relative">
               <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400">person</span>
               <input
@@ -21,14 +35,14 @@
                 required
                 autocomplete="email"
                 class="w-full pl-11 pr-4 py-2.5 rounded-lg bg-gray-100 dark:bg-gray-700 border border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 outline-none text-gray-900 dark:text-white placeholder-gray-500"
-                placeholder="your@email.com"
+                :placeholder="$t('email_placeholder')"
               />
             </div>
           </div>
 
           <!-- Password -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Password</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{{ $t('password') }}</label>
             <div class="relative">
               <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400">lock</span>
               <input
@@ -52,9 +66,9 @@
           <div class="flex items-center justify-between text-sm">
             <label class="flex items-center gap-2">
               <input type="checkbox" v-model="rememberMe" class="size-4 rounded text-green-600" />
-              <span class="text-gray-600 dark:text-gray-300">Remember me</span>
+              <span class="text-gray-600 dark:text-gray-300">{{ $t('remember_me') }}</span>
             </label>
-            <a href="#" class="text-green-600 hover:text-green-500">Forgot password?</a>
+            <a href="#" class="text-green-600 hover:text-green-500">{{ $t('forgot_password') }}</a>
           </div>
 
           <button
@@ -66,15 +80,15 @@
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
             </svg>
-            {{ loading ? 'Signing in...' : 'Sign in' }}
+            {{ loading ? $t('signing_in') : $t('sign_in') }}
           </button>
         </form>
 
         <!-- Register Link -->
         <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-8">
-          Don't have an account?
+          {{ $t('no_account') }}
           <router-link to="/register" class="text-green-600 hover:text-green-500 font-medium">
-            Register
+            {{ $t('register') }}
           </router-link>
         </p>
       </div>
@@ -85,11 +99,17 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import request from '../../util/request'
 import { useProfileStore } from '../../util/profile'
+import { useThemeStore } from '../../util/theme'
+import { useLanguageStore } from '../../util/language'
 
 const router = useRouter()
 const profileStore = useProfileStore()
+const { t } = useI18n()
+const themeStore = useThemeStore()
+const languageStore = useLanguageStore()
 
 const email = ref('')
 const password = ref('')
@@ -121,10 +141,10 @@ const onLogin = async () => {
 
       await router.push('/dashboard')
     } else {
-      errorMessage.value = response?.message || 'Invalid credentials. Please try again.'
+      errorMessage.value = response?.message || t('login_invalid_credentials')
     }
   } catch (err) {
-    errorMessage.value = err?.response?.data?.error || 'Login failed. Please check your connection and try again.'
+    errorMessage.value = err?.response?.data?.error || t('login_failed')
     console.error('Login error:', err)
   } finally {
     loading.value = false

@@ -5,7 +5,7 @@
       <div v-if="loading" class="flex justify-center py-32">
         <div class="flex flex-col items-center gap-4">
           <div class="h-16 w-16 animate-spin rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 shadow-xl"></div>
-          <p class="text-lg text-gray-600 dark:text-gray-400 font-medium">Loading profile...</p>
+          <p class="text-lg text-gray-600 dark:text-gray-400 font-medium">{{ $t('loading_profile') }}</p>
         </div>
       </div>
 
@@ -16,7 +16,7 @@
         </div>
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">{{ error }}</h3>
         <button @click="fetchProfile" class="px-8 py-3 bg-red-600 text-white font-medium rounded-xl hover:bg-red-700 focus:ring-4 focus:ring-red-500/20 transition-all shadow-lg">
-          Try Again
+          {{ $t('try_again') }}
         </button>
       </div>
 
@@ -87,7 +87,7 @@
                 <div class="flex items-center justify-center lg:justify-end">
                   <div class="inline-flex items-center gap-2 px-6 py-3 bg-green-100 dark:bg-green-900/50 border border-green-200 dark:border-green-800/50 rounded-2xl text-green-800 dark:text-green-200 font-medium text-sm shadow-lg">
                     <span class="material-symbols-outlined text-lg">verified_user</span>
-                    Active Account
+                    {{ $t('active_account') }}
                   </div>
                 </div>
               </div>
@@ -96,19 +96,19 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
                 <div class="text-center lg:text-left p-4 rounded-2xl bg-gray-50/50 dark:bg-gray-700/30 hover:bg-gray-100 dark:hover:bg-gray-600/30 transition-all">
                   <div class="text-2xl font-bold text-green-600 dark:text-green-400">{{ formatDate(profile.created_at) }}</div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Member Since</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">{{ $t('member_since') }}</div>
                 </div>
                 <div class="text-center lg:text-left p-4 rounded-2xl bg-gray-50/50 dark:bg-gray-700/30 hover:bg-gray-100 dark:hover:bg-gray-600/30 transition-all">
-                  <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ profile.profile?.phone || 'Not set' }}</div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Phone</div>
+                  <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{ profile.profile?.phone || $t('not_set') }}</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">{{ $t('phone_label') }}</div>
                 </div>
                 <div class="text-center lg:text-left p-4 rounded-2xl bg-gray-50/50 dark:bg-gray-700/30 hover:bg-gray-100 dark:hover:bg-gray-600/30 transition-all">
-                  <div class="text-2xl font-bold text-purple-600 dark:text-purple-400 truncate max-w-xs">{{ profile.profile?.address || 'Not set' }}</div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Address</div>
+                  <div class="text-2xl font-bold text-purple-600 dark:text-purple-400 truncate max-w-xs">{{ profile.profile?.address || $t('not_set') }}</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">{{ $t('address') }}</div>
                 </div>
                 <div class="text-center lg:text-left p-4 rounded-2xl bg-gray-50/50 dark:bg-gray-700/30 hover:bg-gray-100 dark:hover:bg-gray-600/30 transition-all">
                   <div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 capitalize">{{ roleLabel }}</div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Role</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">{{ $t('role_singular') }}</div>
                 </div>
               </div>
             </div>
@@ -120,7 +120,7 @@
                 class="w-full sm:w-auto flex items-center justify-center gap-3 px-6 py-3 bg-green-600 text-white font-semibold rounded-2xl hover:bg-green-700 focus:ring-4 focus:ring-green-500/30 shadow-lg transition-all duration-300 whitespace-nowrap"
               >
                 <span class="material-symbols-outlined">edit</span>
-                Edit Profile
+                {{ $t('edit_profile') }}
               </button>
 
               <button
@@ -128,7 +128,7 @@
                 class="w-full sm:w-auto flex items-center justify-center gap-3 px-6 py-3 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-700/50 focus:ring-4 focus:ring-gray-500/20 shadow-md transition-all duration-300 whitespace-nowrap"
               >
                 <span class="material-symbols-outlined">lock</span>
-                Change Password
+                {{ $t('change_password') }}
               </button>
 
               <button
@@ -136,7 +136,7 @@
                 class="w-full sm:w-auto flex items-center justify-center gap-3 px-6 py-3 bg-red-600 text-white font-semibold rounded-2xl hover:bg-red-700 focus:ring-4 focus:ring-red-500/30 shadow-lg transition-all duration-300 whitespace-nowrap"
               >
                 <span class="material-symbols-outlined">logout</span>
-                Logout
+                {{ $t('logout') }}
               </button>
             </div>
           </div>
@@ -150,29 +150,29 @@
     <!-- Edit Profile Modal -->
     <div v-if="showEditModal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" @click.self="closeEditModal">
       <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Edit Profile</h2>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">{{ $t('edit_profile') }}</h2>
         <form @submit.prevent="saveProfile" class="space-y-5">
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('name_label') }}</label>
             <input v-model="editForm.name" type="text" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-green-500 outline-none" />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('phone_label') }}</label>
             <input v-model="editForm.phone" type="tel" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-green-500 outline-none" />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Address</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('address') }}</label>
             <input v-model="editForm.address" type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-green-500 outline-none" />
           </div>
 
           <div class="flex justify-end gap-3 pt-4">
             <button type="button" @click="closeEditModal" class="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-              Cancel
+              {{ $t('cancel') }}
             </button>
             <button type="submit" :disabled="saving" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center gap-2 transition">
               <span v-if="saving" class="material-symbols-outlined animate-spin text-xl">refresh</span>
-              {{ saving ? 'Saving...' : 'Save Changes' }}
+              {{ saving ? $t('saving') : $t('save_changes') }}
             </button>
           </div>
         </form>
@@ -182,29 +182,29 @@
     <!-- Change Password Modal -->
     <div v-if="showPasswordModal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" @click.self="closePasswordModal">
       <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Change Password</h2>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">{{ $t('change_password') }}</h2>
         <form @submit.prevent="changePassword" class="space-y-5">
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Current Password</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('current_password') }}</label>
             <input v-model="passwordForm.current" type="password" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-green-500 outline-none" />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">New Password</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('new_password') }}</label>
             <input v-model="passwordForm.new" type="password" required minlength="6" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-green-500 outline-none" />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm New Password</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('confirm_new_password') }}</label>
             <input v-model="passwordForm.confirm" type="password" required minlength="6" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-green-500 outline-none" />
           </div>
 
           <div class="flex justify-end gap-3 pt-4">
             <button type="button" @click="closePasswordModal" class="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-              Cancel
+              {{ $t('cancel') }}
             </button>
             <button type="submit" :disabled="savingPassword" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center gap-2 transition">
               <span v-if="savingPassword" class="material-symbols-outlined animate-spin text-xl">refresh</span>
-              {{ savingPassword ? 'Updating...' : 'Update Password' }}
+              {{ savingPassword ? $t('updating') : $t('update_password') }}
             </button>
           </div>
         </form>
@@ -213,9 +213,9 @@
 
     <ConfirmModal
       ref="confirmModal"
-      title="Logout"
-      message="Are you sure you want to log out of your account?"
-      confirm-text="Logout"
+      :title="$t('logout')"
+      :message="$t('logout_confirm')"
+      :confirm-text="$t('logout')"
     />
   </div>
 </template>
@@ -402,4 +402,5 @@ const onLogout = async () => {
 onMounted(() => {
   fetchProfile()
 })
+// Trigger HMR
 </script>

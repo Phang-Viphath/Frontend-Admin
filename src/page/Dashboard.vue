@@ -2,19 +2,19 @@
   <div class="space-y-6">
     <!-- Page Title -->
     <div class="flex items-center justify-between">
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h1>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('dashboard') }}</h1>
       <div class="flex items-center gap-3">
         <span v-if="isRefreshing" class="flex items-center gap-1.5 text-xs text-gray-400 dark:text-gray-500">
           <span class="material-symbols-outlined animate-spin text-base">progress_activity</span>
-          Refreshing...
+          {{ $t('refreshing') }}
         </span>
-        <p v-else class="text-sm text-gray-500 dark:text-gray-400">Last updated: {{ lastUpdatedLabel }}</p>
+        <p v-else class="text-sm text-gray-500 dark:text-gray-400">{{ $t('last_updated') }} {{ lastUpdatedLabel }}</p>
         <div class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
           <span class="relative flex h-2 w-2">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>
-          Live Sync
+          {{ $t('live_sync') }}
         </div>
       </div>
     </div>
@@ -26,12 +26,12 @@
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Revenue</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ $t('total_revenue') }}</p>
             <!-- Skeleton -->
             <div v-if="isLoadingReports" class="mt-2 h-9 w-28 rounded-lg bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
             <p v-else class="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">${{ kpis.total_revenue }}</p>
             <div v-if="isLoadingReports" class="mt-2 h-3 w-40 rounded bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
-            <p v-else class="text-xs text-gray-500 dark:text-gray-400 mt-2">Based on reservations in selected period</p>
+            <p v-else class="text-xs text-gray-500 dark:text-gray-400 mt-2">{{ $t('based_on_reservations') }}</p>
           </div>
           <div class="p-3 rounded-lg bg-blue-100 dark:bg-blue-900/30 ml-4 flex-shrink-0">
             <span class="material-symbols-outlined text-3xl text-blue-600 dark:text-blue-400">payments</span>
@@ -43,11 +43,11 @@
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Occupancy Rate</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ $t('occupancy_rate') }}</p>
             <div v-if="isLoadingReports" class="mt-2 h-9 w-20 rounded-lg bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
             <p v-else class="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{{ kpis.occupancy_rate }}%</p>
             <div v-if="isLoadingReports" class="mt-2 h-3 w-32 rounded bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
-            <p v-else class="text-xs text-gray-500 dark:text-gray-400 mt-2">Calculated from room-nights</p>
+            <p v-else class="text-xs text-gray-500 dark:text-gray-400 mt-2">{{ $t('calculated_from_room_nights') }}</p>
           </div>
           <div class="p-3 rounded-lg bg-green-100 dark:bg-green-900/30 ml-4 flex-shrink-0">
             <span class="material-symbols-outlined text-3xl text-green-600 dark:text-green-400">trending_up</span>
@@ -59,11 +59,11 @@
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Bookings</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ $t('total_bookings') }}</p>
             <div v-if="isLoadingReservations" class="mt-2 h-9 w-14 rounded-lg bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
             <p v-else class="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{{ totalBookingsThisMonth }}</p>
             <div v-if="isLoadingReservations" class="mt-2 h-3 w-44 rounded bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
-            <p v-else class="text-xs text-gray-500 dark:text-gray-400 mt-2">Count of reservations (non-cancelled)</p>
+            <p v-else class="text-xs text-gray-500 dark:text-gray-400 mt-2">{{ $t('count_of_reservations') }}</p>
           </div>
           <div class="p-3 rounded-lg bg-purple-100 dark:bg-purple-900/30 ml-4 flex-shrink-0">
             <span class="material-symbols-outlined text-3xl text-purple-600 dark:text-purple-400">calendar_month</span>
@@ -75,11 +75,11 @@
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Available Rooms</p>
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ $t('available_rooms') }}</p>
             <div v-if="isLoadingRooms" class="mt-2 h-9 w-14 rounded-lg bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
             <p v-else class="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{{ roomCounts.available }}</p>
             <div v-if="isLoadingRooms" class="mt-2 h-3 w-32 rounded bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
-            <p v-else class="text-xs text-gray-500 dark:text-gray-400 mt-2">Out of {{ totalRooms }} total rooms</p>
+            <p v-else class="text-xs text-gray-500 dark:text-gray-400 mt-2">{{ $t('out_of_total_rooms', { total: totalRooms }) }}</p>
           </div>
           <div class="p-3 rounded-lg bg-orange-100 dark:bg-orange-900/30 ml-4 flex-shrink-0">
             <span class="material-symbols-outlined text-3xl text-orange-600 dark:text-orange-400">bed</span>
@@ -93,21 +93,21 @@
       <!-- Recent Reservations Table -->
       <div class="lg:col-span-2 rounded-xl bg-white dark:bg-[#1e293b] shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Reservations</h2>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $t('recent_reservations') }}</h2>
           <span v-if="isLoadingReservations" class="flex items-center gap-1 text-xs text-gray-400">
             <span class="material-symbols-outlined animate-spin text-sm">progress_activity</span>
-            Loading...
+            {{ $t('loading') }}
           </span>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-sm text-left">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#2d3b4e] dark:text-gray-400">
               <tr>
-                <th class="px-6 py-3">Guest Name</th>
-                <th class="px-6 py-3">Room</th>
-                <th class="px-6 py-3">Check-in</th>
-                <th class="px-6 py-3">Check-out</th>
-                <th class="px-6 py-3">Status</th>
+                <th class="px-6 py-3">{{ $t('guest_name') }}</th>
+                <th class="px-6 py-3">{{ $t('room') }}</th>
+                <th class="px-6 py-3">{{ $t('check_in') }}</th>
+                <th class="px-6 py-3">{{ $t('check_out') }}</th>
+                <th class="px-6 py-3">{{ $t('status_header') }}</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -151,7 +151,7 @@
                 <td class="px-6 py-4">{{ formatDate(r.check_out) }}</td>
                 <td class="px-6 py-4">
                   <span class="px-2 py-1 text-xs rounded-full" :class="statusBadgeClass(r.status)">
-                    {{ r.status }}
+                    {{ getStatusLabel(r.status) }}
                   </span>
                 </td>
               </tr>
@@ -160,7 +160,7 @@
               <tr v-if="!isLoadingReservations && !recentReservations.length">
                 <td colspan="5" class="px-6 py-10 text-center text-gray-400 dark:text-gray-500">
                   <div class="flex flex-col items-center gap-2">
-                    <span class="text-sm">No reservations found</span>
+                    <span class="text-sm">{{ $t('no_reservations_found') }}</span>
                   </div>
                 </td>
               </tr>
@@ -171,7 +171,7 @@
 
       <!-- Quick Room Status -->
       <div class="rounded-xl bg-white dark:bg-[#1e293b] shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Room Status (Today)</h2>
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">{{ $t('room_status_today') }}</h2>
 
         <!-- Skeleton -->
         <div v-if="isLoadingRooms" class="space-y-4 animate-pulse">
@@ -191,35 +191,35 @@
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
               <div class="w-4 h-4 rounded bg-yellow-500"></div>
-              <span class="text-sm font-medium">Occupied</span>
+              <span class="text-sm font-medium">{{ $t('occupied') }}</span>
             </div>
             <span class="text-lg font-bold">{{ roomCounts.occupied }}</span>
           </div>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
               <div class="w-4 h-4 rounded bg-blue-500"></div>
-              <span class="text-sm font-medium">Reserved</span>
+              <span class="text-sm font-medium">{{ $t('reserved') }}</span>
             </div>
             <span class="text-lg font-bold">{{ roomCounts.reserved }}</span>
           </div>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
               <div class="w-4 h-4 rounded bg-gray-400"></div>
-              <span class="text-sm font-medium">Cleaning</span>
+              <span class="text-sm font-medium">{{ $t('cleaning') }}</span>
             </div>
             <span class="text-lg font-bold">{{ roomCounts.cleaning }}</span>
           </div>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
               <div class="w-4 h-4 rounded bg-red-500"></div>
-              <span class="text-sm font-medium">Maintenance</span>
+              <span class="text-sm font-medium">{{ $t('maintenance') }}</span>
             </div>
             <span class="text-lg font-bold">{{ roomCounts.maintenance }}</span>
           </div>
           <div class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
             <div class="flex items-center gap-3">
               <div class="w-4 h-4 rounded bg-green-500"></div>
-              <span class="text-sm font-medium">Available</span>
+              <span class="text-sm font-medium">{{ $t('available') }}</span>
             </div>
             <span class="text-lg font-bold text-green-600 dark:text-green-400">{{ roomCounts.available }}</span>
           </div>
@@ -227,7 +227,7 @@
 
         <p class="text-xs text-gray-500 dark:text-gray-400 mt-6">
           <span v-if="isLoadingRooms" class="inline-block h-3 w-28 rounded bg-gray-200 dark:bg-gray-700 animate-pulse"></span>
-          <span v-else>Out of {{ totalRooms }} total rooms</span>
+          <span v-else>{{ $t('out_of_total_rooms', { total: totalRooms }) }}</span>
         </p>
       </div>
     </div>
@@ -236,9 +236,12 @@
 
 <script setup>
 import { computed, onMounted, onBeforeUnmount, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import request from '@/util/request'
 import { resolveImageUrl } from '@/util/image'
 import userAvatar from '@/assets/user_avatar.png'
+
+const { t } = useI18n()
 
 // ── Loading states ──────────────────────────────────────────
 const isLoadingReports      = ref(false)
@@ -283,11 +286,24 @@ const totalBookingsThisMonth = computed(() => {
 
 const roomCounts = computed(() => {
   const counts = { occupied: 0, reserved: 0, cleaning: 0, maintenance: 0, available: 0 }
-  const list = Array.isArray(rooms.value) ? rooms.value : []
-  for (const room of list) {
+  
+  // Get cleaning, maintenance, available from rooms
+  const roomList = Array.isArray(rooms.value) ? rooms.value : []
+  for (const room of roomList) {
     const s = String(room.status || '').toLowerCase()
-    if (s in counts) counts[s] += 1
+    if (['cleaning', 'maintenance', 'available'].includes(s)) {
+      counts[s] += 1
+    }
   }
+
+  // Get occupied and reserved from reservations
+  const resList = Array.isArray(reservations.value) ? reservations.value : []
+  for (const res of resList) {
+    const s = String(res.status || '').toLowerCase().replace(/[- ]/g, '_')
+    if (s === 'checked_in') counts.occupied += 1
+    if (s === 'confirmed') counts.reserved += 1
+  }
+  
   return counts
 })
 
@@ -297,6 +313,12 @@ const totalRooms = computed(() => {
 })
 
 // ── Helpers ─────────────────────────────────────────────────
+const getStatusLabel = (status) => {
+  if (!status) return t('status_pending')
+  const key = `status_${String(status).toLowerCase().replace(/[- ]/g, '_')}`
+  return t(key)
+}
+
 const getGuestImageSrc = (r) => {
   const resolved = resolveImageUrl(r?.guest_image)
   return resolved || userAvatar
