@@ -1,6 +1,5 @@
 <template>
   <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
-    <!-- Table Header (with inline loading state) -->
     <div v-if="isLoading" class="p-4 border-b border-gray-200 dark:border-slate-700 flex items-center justify-end bg-gray-50/50 dark:bg-slate-800/50">
       <span class="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
         <span class="material-symbols-outlined animate-spin text-[16px] text-blue-600">progress_activity</span>
@@ -8,7 +7,6 @@
       </span>
     </div>
 
-    <!-- Table -->
     <div class="overflow-x-auto">
       <table class="w-full text-sm">
         <thead class="text-xs uppercase bg-gray-50 dark:bg-slate-700 text-gray-700 dark:text-gray-400 border-b border-gray-200 dark:border-slate-700">
@@ -24,7 +22,6 @@
         </thead>
         <tbody class="divide-y divide-gray-200 dark:divide-slate-700">
 
-          <!-- Skeleton Rows -->
           <template v-if="isLoading">
             <tr v-for="i in 5" :key="`sk-${i}`" class="animate-pulse bg-white dark:bg-slate-800">
               <td class="px-6 py-4">
@@ -49,7 +46,6 @@
             </tr>
           </template>
 
-          <!-- Empty State -->
           <tr v-else-if="reservations.length === 0">
             <td colspan="7" class="px-6 py-16 text-center">
               <div class="flex flex-col items-center justify-center">
@@ -60,7 +56,6 @@
             </td>
           </tr>
 
-          <!-- Actual Data -->
           <template v-else>
             <tr
               v-for="reservation in reservations"
@@ -158,7 +153,6 @@
       </table>
     </div>
 
-    <!-- Footer -->
     <div v-if="!isLoading && reservations.length > 0" class="px-6 py-4 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900/50">
       <p class="text-sm text-gray-600 dark:text-gray-400">
         {{ $t('showing_reservations', { count: reservations.length }) }}

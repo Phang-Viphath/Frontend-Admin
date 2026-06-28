@@ -1,6 +1,5 @@
 <template>
   <div class="space-y-6">
-    <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('reservations') }}</h1>
       <button
@@ -13,7 +12,6 @@
       </button>
     </div>
 
-    <!-- Modals -->
     <ReservationCreateModal
       v-if="isCreateOpen"
       :form="createForm"
@@ -55,7 +53,6 @@
 
     <InvoicePrinter ref="invoicePrinter" />
 
-    <!-- Filters -->
     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-5">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="relative">
@@ -74,8 +71,6 @@
           :disabled="isLoading"
           class="px-4 py-2.5 bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none disabled:opacity-60 transition"
         >
-        <!-- Paid -->
-         <!-- failed -->
           <option value="all">{{ $t('all_statuses') }}</option>
           <option value="confirmed">{{ $t('status_confirmed') }}</option>
           <option value="pending">{{ $t('status_pending') }}</option>
@@ -100,7 +95,6 @@
       </div>
     </div>
 
-    <!-- Table -->
     <ReservationTable
       :reservations="filteredReservations"
       :is-loading="isLoading"
@@ -119,7 +113,6 @@
       <div
         class="relative w-full max-w-md rounded-xl bg-[#1A1A1A] text-white shadow-2xl overflow-hidden font-sans border border-[#333]"
       >
-        <!-- Header -->
         <div class="flex items-center justify-between px-5 py-4 bg-[#E51220]">
           <div class="flex items-center gap-3">
              <span class="material-symbols-outlined text-white text-3xl">phone_iphone</span>
@@ -138,7 +131,6 @@
         </div>
 
         <div class="p-6">
-          <!-- Toggle KHQR / Bakong Merchant -->
           <div class="flex justify-center items-center gap-4 mb-6 text-sm font-semibold tracking-wide">
             <div class="flex items-center gap-2 px-4 py-1.5 bg-white rounded-full text-[#E51220]">
                <div class="w-2.5 h-2.5 rounded-full bg-[#E51220] animate-pulse"></div>
@@ -148,7 +140,6 @@
             <div class="text-[#E2A63B]">BAKONG MERCHANT</div>
           </div>
 
-          <!-- QR Code Container -->
           <div class="flex justify-center mb-6">
             <div class="p-1 border border-[#E51220] rounded relative bg-transparent">
               <div class="p-1 bg-white">
@@ -160,7 +151,6 @@
             </div>
           </div>
 
-          <!-- Payment Details -->
           <div class="rounded border border-[#333] bg-[#111] p-5 space-y-3 mb-6">
             <div class="flex items-center justify-between text-sm">
               <span class="text-gray-400">Merchant / អាជីវករ:</span>
@@ -181,7 +171,6 @@
             </div>
           </div>
 
-          <!-- Timer -->
           <div class="flex items-center justify-center gap-2 text-sm text-gray-400 mb-6 font-medium">
              <span class="material-symbols-outlined text-lg">schedule</span>
              <span>QR expires in: <span class="text-[#E51220] font-mono">{{ formattedPaymentTimeLeft }}</span></span>
@@ -213,26 +202,22 @@ import ReservationViewModal from '../components/reservation/ReservationViewModal
 import ReservationTable from '../components/reservation/ReservationTable.vue'
 import InvoicePrinter from '../components/reservation/InvoicePrinter.vue'
 
-// Data
 const reservations = ref([])
 const guests = ref([])
 const rooms = ref([])
 
-// Loading states
 const isLoading = ref(true)
 const isLoadingGuests = ref(true)
 const isLoadingRooms = ref(true)
 const isSaving = ref(false)
 const cancellingId = ref(null)
 
-// Filters
 const headerSearchQuery = inject('reservationsSearchQuery', null)
 let searchQuery = ref('')
 if (headerSearchQuery) {
   searchQuery = headerSearchQuery
 }
 
-// Payment modal state
 const isPaymentOpen = ref(false)
 const paymentReservation = ref(null)
 const paymentQrUrl = ref('')
@@ -379,12 +364,10 @@ const statusFilter = ref('all')
 const checkInDate = ref('')
 const checkOutDate = ref('')
 
-// Modal states
 const isCreateOpen = ref(false)
 const isEditOpen = ref(false)
 const isViewOpen = ref(false)
 
-// Forms
 const createForm = ref({
   guest_id: '',
   room_id: '',
@@ -425,7 +408,6 @@ const viewData = ref({
 const confirmDeleteModal = ref(null)
 const invoicePrinter = ref(null)
 
-// Computed
 const isFormValid = computed(() =>
   createForm.value.guest_id &&
   createForm.value.room_id &&
@@ -475,7 +457,6 @@ const filteredReservations = computed(() => {
   return filtered
 })
 
-// Methods
 const mapReservation = r => ({
   id: r.id,
   guest: r.guest?.name ?? 'Unknown',
@@ -489,7 +470,6 @@ const mapReservation = r => ({
   raw: r
 })
 
-// Data loading
 const loadReservations = async () => {
   try {
     isLoading.value = true
@@ -526,7 +506,6 @@ const loadRooms = async () => {
   }
 }
 
-// Form updates
 const updateCreateForm = (field, value) => {
   createForm.value[field] = value
 }
@@ -535,7 +514,6 @@ const updateEditForm = (field, value) => {
   editForm.value[field] = value
 }
 
-// Modal operations
 const openCreate = () => {
   createForm.value = { guest_id: '', room_id: '', check_in: '', check_out: '', status: 'Pending' }
   isCreateOpen.value = true
@@ -593,7 +571,6 @@ const printInvoice = (reservation = null) => {
   invoicePrinter.value?.print(r)
 }
 
-// CRUD operations
 const submitCreate = async () => {
   if (!isFormValid.value) {
     showToast('Please complete all required fields', 'warning')
@@ -602,7 +579,6 @@ const submitCreate = async () => {
 
   isSaving.value = true
   try {
-    // Create the reservation
     await request('/reservations', 'POST', {
       guest_id: Number(createForm.value.guest_id),
       room_id: Number(createForm.value.room_id),
@@ -611,13 +587,11 @@ const submitCreate = async () => {
       status: createForm.value.status
     })
     
-    // Update room status to occupied (booked)
     try {
       const formData = new FormData()
       formData.append('status', 'occupied')
       formData.append('_method', 'PUT')
       
-      // Get current room data first to preserve other fields
       const room = rooms.value.find(r => r.id === Number(createForm.value.room_id))
       if (room) {
         formData.append('number', room.number)
@@ -630,14 +604,13 @@ const submitCreate = async () => {
       await request(`/rooms/${createForm.value.room_id}`, 'POST', formData)
     } catch (roomErr) {
       console.warn('Failed to update room status:', roomErr)
-      // Don't fail the entire operation if room status update fails
     }
     
     showToast('Reservation created successfully', 'success')
     closeCreate()
     await Promise.all([
       loadReservations(),
-      loadRooms() // Reload rooms to reflect status change
+      loadRooms()
     ])
   } catch (err) {
     showToast(err?.response?.data?.message || 'Failed to create reservation', 'error')
@@ -698,7 +671,6 @@ const cancelReservation = async (reservation) => {
   }
 }
 
-// Lifecycle
 onMounted(async () => {
   try {
     await Promise.all([

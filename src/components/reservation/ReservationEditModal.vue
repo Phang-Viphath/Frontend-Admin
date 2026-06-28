@@ -164,24 +164,19 @@ const isRoomAvailable = (roomId, currentReservationId = null) => {
   const checkIn = new Date(props.form.check_in)
   const checkOut = new Date(props.form.check_out)
 
-  // Check if dates are valid
   if (checkIn >= checkOut) {
     return false
   }
 
-  // Check for overlapping reservations (excluding current reservation)
   const hasOverlap = props.reservations.some(reservation => {
-    // Skip current reservation being edited
     if (currentReservationId && reservation.id === currentReservationId) {
       return false
     }
 
-    // Skip cancelled reservations
     if (reservation.status === 'cancelled') {
       return false
     }
 
-    // Check if same room
     if (reservation.raw?.room?.id !== roomId) {
       return false
     }
@@ -189,7 +184,6 @@ const isRoomAvailable = (roomId, currentReservationId = null) => {
     const resCheckIn = new Date(reservation.checkIn)
     const resCheckOut = new Date(reservation.checkOut)
 
-    // Check for date overlap
     return (
       (checkIn >= resCheckIn && checkIn < resCheckOut) ||
       (checkOut > resCheckIn && checkOut <= resCheckOut) ||
@@ -201,21 +195,16 @@ const isRoomAvailable = (roomId, currentReservationId = null) => {
 }
 
 const availableRooms = computed(() => {
-  // If dates are not selected, show all rooms
   if (!props.form.check_in || !props.form.check_out) {
     return props.rooms || []
   }
 
-  // Get currently selected room
   const currentRoom = (props.rooms || []).find(room => room.id === Number(props.form.room_id))
   
-  // Filter to show available rooms + currently selected room (if different)
   const available = (props.rooms || []).filter(room => {
-    // Always include currently selected room
     if (currentRoom && room.id === currentRoom.id) {
       return true
     }
-    // Include other available rooms
     return isRoomAvailable(room.id, props.form.id)
   })
 

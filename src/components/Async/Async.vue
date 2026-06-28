@@ -1,14 +1,11 @@
-<!-- src/components/Async.vue -->
 <template>
   <div>
-    <!-- Loading -->
     <div v-if="isLoading">
       <slot name="loading">
         <Spinner />
       </slot>
     </div>
 
-    <!-- Error -->
     <div v-else-if="hasError" class="py-8 text-center">
       <div class="text-red-600 dark:text-red-400 mb-2 text-lg font-medium">
         {{ $t('something_went_wrong') }}
@@ -24,7 +21,6 @@
       </button>
     </div>
 
-    <!-- Content -->
     <slot v-else :data="resolvedData"></slot>
   </div>
 </template>

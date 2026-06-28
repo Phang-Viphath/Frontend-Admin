@@ -1,6 +1,5 @@
 <template>
   <div class="space-y-6">
-    <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
         <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('rooms_title') }}</h1>
@@ -17,7 +16,6 @@
       </button>
     </div>
 
-    <!-- Room Summary Cards - Loading State -->
     <div v-if="isLoading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div v-for="i in 4" :key="i" class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
@@ -32,7 +30,6 @@
       </div>
     </div>
 
-    <!-- Room Summary Cards -->
     <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
@@ -83,7 +80,6 @@
       </div>
     </div>
 
-    <!-- Filters & Search -->
     <div class="rounded-xl bg-white dark:bg-[#1e293b] p-4 shadow-sm border border-gray-200 dark:border-gray-700">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div class="relative">
@@ -137,14 +133,11 @@
       </div>
     </div>
 
-    <!-- Rooms Grid Loading Skeleton -->
     <div v-if="isLoading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <div v-for="i in 8" :key="i" class="rounded-xl bg-white dark:bg-[#1e293b] shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <!-- Image Skeleton -->
         <div class="h-48 bg-gray-300 dark:bg-gray-700 animate-pulse"></div>
         
         <div class="p-5">
-          <!-- Header Skeleton -->
           <div class="flex justify-between items-start mb-4">
             <div class="space-y-2">
               <div class="h-5 bg-gray-300 dark:bg-gray-700 rounded w-32 animate-pulse"></div>
@@ -153,7 +146,6 @@
             <div class="h-6 bg-gray-300 dark:bg-gray-700 rounded-full w-20 animate-pulse"></div>
           </div>
 
-          <!-- Footer Skeleton -->
           <div class="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
             <div class="space-y-2">
               <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded w-16 animate-pulse"></div>
@@ -168,7 +160,6 @@
       </div>
     </div>
 
-    <!-- Rooms Grid -->
     <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <div
         v-for="room in filteredRooms"
@@ -234,14 +225,12 @@
       </div>
     </div>
 
-    <!-- Empty State -->
     <div v-if="!isLoading && filteredRooms.length === 0" class="text-center py-12">
       <span class="material-symbols-outlined text-6xl text-gray-400">bed</span>
       <h3 class="mt-4 text-lg font-medium text-gray-900 dark:text-gray-100">{{ $t('no_rooms_found') }}</h3>
       <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ $t('try_adjusting_filters_or_add_room') }}</p>
     </div>
 
-    <!-- Stats Loading Indicator -->
     <div v-if="isLoading" class="text-center py-4">
       <div class="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
         <span class="animate-spin material-symbols-outlined text-base">refresh</span>
@@ -249,7 +238,6 @@
       </div>
     </div>
 
-    <!-- Modal -->
     <RoomFormModal ref="roomFormModal" @saved="fetchRooms" @saving="setSaving" />
     <ConfirmModalDelete 
       ref="confirmModalDelete"
@@ -283,7 +271,6 @@ const setSaving = (value) => {
   isSaving.value = Boolean(value)
 }
 
-// Format floor display
 const formatFloor = (floor) => {
   if (!floor) return '—'
   return floor
@@ -293,7 +280,6 @@ const formatFloor = (floor) => {
     .replace(/^(\d+)$/, 'Floor $1')
 }
 
-// Stats
 const roomStats = computed(() => ({
   available: rooms.value.filter(r => r.status === 'available').length,
   occupied: rooms.value.filter(r => r.status === 'occupied').length,
@@ -301,7 +287,6 @@ const roomStats = computed(() => ({
   maintenance: rooms.value.filter(r => r.status === 'maintenance').length
 }))
 
-// Filtered rooms
 const filteredRooms = computed(() => {
   return rooms.value.filter(room => {
     const matchesSearch = room.number.toLowerCase().includes(searchQuery.value.toLowerCase()) ||

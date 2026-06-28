@@ -1,12 +1,10 @@
 <template>
   <div class="space-y-6">
-    <!-- Page Header -->
     <div>
       <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('settings') }}</h1>
       <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ $t('settings_desc') }}</p>
     </div>
 
-    <!-- Tabs -->
     <div class="border-b border-gray-200 dark:border-gray-700">
       <nav class="-mb-px flex space-x-8">
         <button
@@ -25,9 +23,7 @@
       </nav>
     </div>
 
-    <!-- Tab Content -->
     <div class="rounded-xl bg-white dark:bg-[#1e293b] shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-      <!-- General Settings -->
       <div v-if="activeTab === 'general'">
         <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">{{ $t('general_settings') }}</h2>
         <div class="space-y-6">
@@ -66,7 +62,6 @@
         </div>
       </div>
 
-      <!-- Hotel Information -->
       <div v-if="activeTab === 'hotel'">
         <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">{{ $t('hotel_info') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -99,7 +94,6 @@
         </div>
       </div>
 
-      <!-- Notifications -->
       <div v-if="activeTab === 'notifications'">
         <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">{{ $t('notification_prefs') }}</h2>
         <div class="space-y-4">
@@ -136,7 +130,6 @@
         </div>
       </div>
 
-      <!-- Security -->
       <div v-if="activeTab === 'security'">
         <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">{{ $t('security_account') }}</h2>
         <div class="space-y-6">
@@ -162,7 +155,6 @@
         </div>
       </div>
 
-      <!-- Integrations (Placeholder) -->
       <div v-if="activeTab === 'integrations'">
         <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">{{ $t('tab_integrations') }}</h2>
         <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('integrations_desc') }}</p>
@@ -177,7 +169,6 @@
             <p class="mt-2 font-medium">Booking.com</p>
             <button class="mt-4 text-sm text-[green]">{{ $t('connect') }}</button>
           </div>
-          <!-- Add more integration cards -->
         </div>
       </div>
     </div>

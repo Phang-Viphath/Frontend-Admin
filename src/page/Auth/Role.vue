@@ -1,6 +1,5 @@
 <template>
   <div class="space-y-6">
-    <!-- ================= HEADER ================= -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
         <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('role_singular') }}</h1>
@@ -19,7 +18,6 @@
       </button>
     </div>
 
-    <!-- ================= FILTER ================= -->
     <div class="bg-white dark:bg-[#1e293b] p-4 rounded-xl border dark:border-gray-700">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="relative">
@@ -46,9 +44,7 @@
       </div>
     </div>
 
-    <!-- ================= TABLE ================= -->
     <div class="bg-white dark:bg-[#1e293b] rounded-xl border dark:border-gray-700 overflow-hidden">
-      <!-- Table Header (with inline loading state) -->
       <div v-if="isLoading" class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-end bg-gray-50/50 dark:bg-[#2d3b4e]/50">
         <span class="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
           <span class="material-symbols-outlined animate-spin text-[16px] text-blue-600">progress_activity</span>
@@ -56,7 +52,6 @@
         </span>
       </div>
 
-      <!-- Filter & Table -->
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead class="bg-gray-50 dark:bg-[#2d3b4e] text-gray-600 dark:text-gray-300">
@@ -72,7 +67,6 @@
             </tr>
           </thead>
           <tbody class="divide-y dark:divide-gray-700">
-            <!-- Skeleton Rows -->
             <template v-if="isLoading">
               <tr v-for="i in 5" :key="`sk-${i}`" class="animate-pulse bg-white dark:bg-[#1e293b]">
                 <td class="px-6 py-4"><div class="h-4 w-8 bg-gray-200 dark:bg-gray-700 rounded"></div></td>
@@ -97,7 +91,6 @@
               </tr>
             </template>
 
-            <!-- Actual Rows -->
             <template v-else>
               <tr
                 v-for="role in filteredRoles"
@@ -165,13 +158,11 @@
         </table>
       </div>
 
-      <!-- Footer -->
       <div v-if="!isLoading && filteredRoles.length > 0" class="flex justify-between items-center px-6 py-4 border-t dark:border-gray-700 bg-gray-50/50 dark:bg-[#2d3b4e]/50">
         <p class="text-sm text-gray-500">{{ $t('total_roles', { total: totalRoles }) }}</p>
       </div>
     </div>
 
-    <!-- ================= MODALS ================= -->
     <AddRoleModal :isOpen="showAddModal" @close="closeAllModals" @created="refreshRoles" />
     <EditRoleModal :isOpen="showEditModal" :role="selectedRole" @close="closeAllModals" @updated="refreshRoles" />
     <DeleteRoleModal :isOpen="showDeleteModal" :role="selectedRole" :actionType="actionType" @close="closeAllModals" @confirmed="refreshRoles" />
@@ -223,7 +214,6 @@ const refreshRoles = () => {
   closeAllModals()
 }
 
-// Initial fetch
 fetchRoles()
 
 /* ================= COMPUTED ================= */

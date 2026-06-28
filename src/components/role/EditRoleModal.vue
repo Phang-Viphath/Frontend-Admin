@@ -1,12 +1,9 @@
 <template>
   <div v-if="isOpen && role" class="fixed inset-0 z-50 overflow-y-auto">
-    <!-- Backdrop -->
     <div class="fixed inset-0 bg-black/50" @click="closeModal"></div>
     
-    <!-- Modal -->
     <div class="flex min-h-full items-center justify-center p-4">
       <div class="relative w-full max-w-md transform rounded-xl bg-white dark:bg-[#1e293b] shadow-xl transition-all">
-        <!-- Header -->
         <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
           <div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $t('edit_role') }}</h3>
@@ -17,9 +14,7 @@
           </button>
         </div>
 
-        <!-- Form -->
         <form @submit.prevent="submitForm" class="p-6 space-y-4">
-          <!-- Role Name -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               {{ $t('role_name') }} <span class="text-red-500">*</span>
@@ -33,7 +28,6 @@
             <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
           </div>
 
-          <!-- Role Code -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               {{ $t('role_code') }} <span class="text-red-500">*</span>
@@ -48,7 +42,6 @@
             <p class="mt-1 text-xs text-gray-500">{{ $t('role_code_locked') }}</p>
           </div>
 
-          <!-- Description -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               {{ $t('description') }}
@@ -60,7 +53,6 @@
             ></textarea>
           </div>
 
-          <!-- Permissions -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               {{ $t('permissions') }}
@@ -81,7 +73,6 @@
             </div>
           </div>
 
-          <!-- Status -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               {{ $t('status_header') }}
@@ -108,7 +99,6 @@
             </div>
           </div>
 
-          <!-- Footer -->
           <div class="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
             <button
               type="button"
@@ -204,7 +194,6 @@ const submitForm = async () => {
     isSubmitting.value = false
   }
 }
-// Watch for role changes
 watch(() => props.role, (newRole) => {
   if (newRole) {
     formData.value = {

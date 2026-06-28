@@ -3,7 +3,7 @@ import i18n from '../i18n'
 
 export const useLanguageStore = defineStore('language', {
   state: () => ({
-    locale: 'en', // Default locale
+    locale: 'en',
   }),
 
   actions: {
@@ -13,7 +13,6 @@ export const useLanguageStore = defineStore('language', {
     },
     
     initLanguage() {
-      // Sync i18n with the persisted state on load
       i18n.global.locale.value = this.locale
     }
   },

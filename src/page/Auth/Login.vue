@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
-    <!-- Top-right Theme/Lang Actions -->
     <div class="absolute top-4 right-4 flex items-center gap-2">
       <button @click="languageStore.setLanguage(languageStore.locale === 'en' ? 'km' : 'en')"
         class="flex items-center justify-center h-10 px-3 rounded-lg text-sm font-semibold bg-green-600/10 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors uppercase">
@@ -18,13 +17,11 @@
       <div class="rounded-xl bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 p-8">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">{{ $t('login') }}</h2>
 
-        <!-- Error message -->
         <div v-if="errorMessage" class="mb-6 p-3 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 rounded-lg text-center text-sm">
           {{ errorMessage }}
         </div>
 
         <form @submit.prevent="onLogin" class="space-y-6">
-          <!-- Email -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{{ $t('email') }}</label>
             <div class="relative">
@@ -40,7 +37,6 @@
             </div>
           </div>
 
-          <!-- Password -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{{ $t('password') }}</label>
             <div class="relative">
@@ -84,7 +80,6 @@
           </button>
         </form>
 
-        <!-- Register Link -->
         <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-8">
           {{ $t('no_account') }}
           <router-link to="/register" class="text-green-600 hover:text-green-500 font-medium">

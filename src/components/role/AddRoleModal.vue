@@ -1,12 +1,9 @@
 <template>
   <div v-if="isOpen" class="fixed inset-0 z-50 overflow-y-auto">
-    <!-- Backdrop -->
     <div class="fixed inset-0 bg-black/50" @click="closeModal"></div>
     
-    <!-- Modal -->
     <div class="flex min-h-full items-center justify-center p-4">
       <div class="relative w-full max-w-md transform rounded-xl bg-white dark:bg-[#1e293b] shadow-xl transition-all">
-        <!-- Header -->
         <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
           <div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $t('add_new_role') }}</h3>
@@ -17,9 +14,7 @@
           </button>
         </div>
 
-        <!-- Form -->
         <form @submit.prevent="submitForm" class="p-6 space-y-4">
-          <!-- Role Name -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               {{ $t('role_name') }} <span class="text-red-500">*</span>
@@ -34,7 +29,6 @@
             <p v-if="errors.name" class="mt-1 text-sm text-red-600">{{ errors.name }}</p>
           </div>
 
-          <!-- Role Code -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               {{ $t('role_code') }} <span class="text-red-500">*</span>
@@ -49,7 +43,6 @@
             <p v-if="errors.code" class="mt-1 text-sm text-red-600">{{ errors.code }}</p>
           </div>
 
-          <!-- Description -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               {{ $t('description') }}
@@ -62,7 +55,6 @@
             ></textarea>
           </div>
 
-          <!-- Permissions -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               {{ $t('permissions') }}
@@ -83,7 +75,6 @@
             </div>
           </div>
 
-          <!-- Status -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               {{ $t('status_header') }}
@@ -110,7 +101,6 @@
             </div>
           </div>
 
-          <!-- Footer -->
           <div class="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
             <button
               type="button"
@@ -208,16 +198,13 @@ const submitForm = async () => {
   } catch (error) {
     console.error('Full error object:', error)
     
-    // Handle validation errors from Laravel
     if (error.response?.data?.errors) {
       errors.value = error.response.data.errors
       console.log('Validation errors:', errors.value)
     } 
-    // Handle other types of errors
     else if (error.response?.data?.message) {
       showToast(error.response.data.message, 'error')
     } 
-    // Handle network errors
     else if (error.message) {
       showToast(`${t('network_error')}: ${error.message}`, 'error')
     } 
@@ -229,7 +216,6 @@ const submitForm = async () => {
   }
 }
 
-// Reset form when modal opens
 watch(() => props.isOpen, (newVal) => {
   if (newVal) {
     resetForm()

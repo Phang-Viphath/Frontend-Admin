@@ -1,4 +1,3 @@
-<!-- src/components/ConfirmModalDelete.vue -->
 <template>
   <div
     v-if="isOpen"
@@ -9,21 +8,18 @@
       class="bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl w-full max-w-md transform transition-all scale-100"
       @click.stop
     >
-      <!-- Header -->
       <div class="p-6 border-b border-gray-200 dark:border-gray-700">
         <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
           {{ title }}
         </h3>
       </div>
 
-      <!-- Body -->
       <div class="p-6">
         <p class="text-gray-600 dark:text-gray-300">
           {{ message }}
         </p>
       </div>
 
-      <!-- Footer -->
       <div class="flex justify-end gap-3 px-6 py-5 border-t border-gray-200 dark:border-gray-700">
         <button
           @click="cancel"
@@ -82,7 +78,6 @@ const confirm = async () => {
   if (resolvePromise.value) {
     resolvePromise.value(true)
   }
-  // Give a tiny delay for visual feedback
   await new Promise(r => setTimeout(r, 300))
   isOpen.value = false
   resolvePromise.value = null
@@ -97,7 +92,6 @@ const cancel = () => {
   loading.value = false
 }
 
-// Expose the open method to parent components
 defineExpose({
   open
 })

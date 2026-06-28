@@ -1,6 +1,5 @@
 <template>
   <div class="space-y-6">
-    <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
         <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('guests_title') }}</h1>
@@ -19,7 +18,6 @@
       </button>
     </div>
 
-    <!-- Filters & Search -->
     <div class="rounded-xl bg-white dark:bg-[#1e293b] p-4 shadow-sm border border-gray-200 dark:border-gray-700">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="relative">
@@ -46,10 +44,8 @@
       </div>
     </div>
 
-    <!-- Loading Skeleton -->
     <div v-if="isLoading" class="rounded-xl bg-white dark:bg-[#1e293b] shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
       <div class="p-6">
-        <!-- Header Skeleton -->
         <div class="flex items-center justify-between mb-6">
           <div>
             <div class="h-6 bg-gray-300 dark:bg-gray-700 rounded w-48 mb-2 animate-pulse"></div>
@@ -58,10 +54,8 @@
           <div class="h-10 bg-gray-300 dark:bg-gray-700 rounded w-32 animate-pulse"></div>
         </div>
 
-        <!-- Table Skeleton -->
         <div class="space-y-4">
           <div v-for="i in 5" :key="i" class="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
-            <!-- Guest Info -->
             <div class="flex items-center space-x-4">
               <div class="size-12 bg-gray-300 dark:bg-gray-700 rounded-full animate-pulse"></div>
               <div>
@@ -70,19 +64,16 @@
               </div>
             </div>
             
-            <!-- Contact Info -->
             <div>
               <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded w-40 mb-2 animate-pulse"></div>
               <div class="h-3 bg-gray-300 dark:bg-gray-700 rounded w-32 animate-pulse"></div>
             </div>
             
-            <!-- Date Info -->
             <div>
               <div class="h-4 bg-gray-300 dark:bg-gray-700 rounded w-28 mb-2 animate-pulse"></div>
               <div class="h-3 bg-gray-300 dark:bg-gray-700 rounded w-20 animate-pulse"></div>
             </div>
             
-            <!-- Actions -->
             <div class="flex space-x-2">
               <div class="size-8 bg-gray-300 dark:bg-gray-700 rounded-lg animate-pulse"></div>
               <div class="size-8 bg-gray-300 dark:bg-gray-700 rounded-lg animate-pulse"></div>
@@ -92,7 +83,6 @@
       </div>
     </div>
     
-    <!-- Guests Table -->
     <div v-else class="rounded-xl bg-white dark:bg-[#1e293b] shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
       <div class="overflow-x-auto">
         <table class="w-full text-sm">

@@ -1,12 +1,10 @@
 <template>
   <div
     class="flex h-screen w-full overflow-hidden bg-gray-50 dark:bg-[#0f172a] text-gray-900 dark:text-gray-100 font-display">
-    <!-- Sidebar -->
     <aside :class="[
       'fixed md:static inset-y-0 left-0 z-40 w-66 flex flex-col bg-white dark:bg-[#1e293b] border-r border-gray-200 dark:border-gray-700 transition-transform duration-300',
       mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
     ]">
-      <!-- Logo -->
       <div class="flex h-16 items-center gap-3 px-6 border-b border-gray-200 dark:border-gray-700">
         <div class="size-10 rounded-lg bg-cover bg-center bg-no-repeat shadow-sm" @click="mobileMenuOpen = false"
           :style="{ backgroundImage: `url(${hotelLogo})` }"></div>
@@ -16,10 +14,8 @@
         </div>
       </div>
 
-      <!-- Navigation -->
       <nav class="flex-1 space-y-1 px-3 py-4 overflow-y-auto">
         <template v-for="item in finalMenuLeft" :key="item.key || item.label">
-          <!-- Collapsible Parent: Users -->
           <div v-if="item.isParent">
             <button @click="usersOpen = !usersOpen"
               class="group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#2d3b4e] transition-colors">
@@ -42,7 +38,6 @@
             </div>
           </div>
 
-          <!-- Normal Menu Item -->
           <RouterLink v-else :to="item.key" @click="mobileMenuOpen = false"
             class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#2d3b4e] transition-colors"
             :class="{ 'bg-[green]/10 text-[green] dark:text-green-400 hover:bg-[green]/20': route.path === item.key }">
@@ -52,7 +47,6 @@
         </template>
       </nav>
 
-      <!-- User Profile Dropdown -->
       <div class="border-t border-gray-200 dark:border-gray-700 p-4 relative">
         <div ref="userTriggerRef" @click="open = !open"
           class="flex items-center gap-3 rounded-lg bg-gray-100 dark:bg-[#2d3b4e] p-3 cursor-pointer hover:bg-gray-200 dark:hover:bg-[#374151] transition-colors">
@@ -97,7 +91,6 @@
       </div>
     </aside>
 
-    <!-- Main Content -->
     <div class="flex-1 flex flex-col overflow-hidden">
       <header
         class="h-16 flex items-center justify-between bg-white dark:bg-[#1e293b] px-6 border-b border-gray-200 dark:border-gray-700">
@@ -146,7 +139,6 @@
               <transition name="dropdown">
                 <div v-if="notificationsOpen" ref="notificationDropdownRef"
                   class="absolute right-0 top-full mt-2 w-96 z-50 rounded-xl bg-white dark:bg-[#1f2937] shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-                  <!-- Header -->
                   <div
                     class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-[#1e293b]">
                     <h3 class="font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
@@ -168,7 +160,6 @@
                       </button>
                     </div>
                   </div>
-                  <!-- Body -->
                   <div class="max-h-96 overflow-y-auto">
                     <div v-if="isLoadingNotifications"
                       class="p-8 text-center text-sm text-gray-500 flex flex-col items-center gap-2">
@@ -210,7 +201,6 @@
                 </div>
               </transition>
             </div>
-            <!-- Help Button & Dropdown -->
             <div class="relative" ref="helpTriggerRef">
               <button @click="toggleHelp" class="p-2 rounded-lg transition-colors aria-label='Help'"
                 :class="helpOpen ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#2d3b4e]'">
@@ -220,14 +210,12 @@
               <transition name="dropdown">
                 <div v-if="helpOpen" ref="helpDropdownRef"
                   class="absolute right-0 top-full mt-2 w-80 z-50 rounded-xl bg-white dark:bg-[#1f2937] shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-                  <!-- Header -->
                   <div
                     class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#1e293b] flex items-center gap-2">
                     <span class="material-symbols-outlined text-[18px] text-green-500">help_center</span>
                     <h3 class="font-semibold text-sm text-gray-900 dark:text-gray-100">{{ $t('help_quick_guide') }}</h3>
                   </div>
 
-                  <!-- Quick Nav -->
                   <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700/50">
                     <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-2">{{
                       $t('quick_navigation') }}</p>
@@ -241,7 +229,6 @@
                     </div>
                   </div>
 
-                  <!-- Feature Tips -->
                   <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700/50">
                     <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-2">{{ $t('tips') }}
                     </p>
@@ -256,7 +243,6 @@
                     </ul>
                   </div>
 
-                  <!-- Keyboard Shortcuts -->
                   <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700/50">
                     <p class="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-2">{{
                       $t('keyboard_shortcuts') }}</p>
@@ -273,7 +259,6 @@
                     </div>
                   </div>
 
-                  <!-- Footer -->
                   <div class="px-4 py-3 flex items-center justify-between">
                     <span class="text-xs text-gray-400 dark:text-gray-500">v1.0.0 &bull; Battambang Hotel</span>
                     <a href="https://t.me/PHANG_VIPHATH" target="_blank"
@@ -309,18 +294,14 @@
     <ConfirmModal ref="confirmModal" :title="$t('logout')" :message="$t('logout_confirm')"
       :confirm-text="$t('logout')" />
 
-    <!-- ===== ADMIN CHAT MODAL ===== -->
     <transition name="admin-chat">
       <div v-if="adminChatOpen" class="fixed inset-0 z-[100] flex items-center justify-center p-4"
         @click.self="closeAdminChat">
-        <!-- Backdrop -->
         <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="closeAdminChat"></div>
 
-        <!-- Chat window -->
         <div
           class="relative w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden flex flex-col bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-700"
           style="max-height: 85vh;">
-          <!-- Chat header -->
           <div
             class="flex items-center gap-3 px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#1e2d22] flex-shrink-0">
             <div class="relative flex-shrink-0">
@@ -341,9 +322,7 @@
             </button>
           </div>
 
-          <!-- Chat body -->
           <div class="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-gray-50 dark:bg-[#0f172a]">
-            <!-- Date divider -->
             <div class="flex items-center gap-2">
               <div class="flex-1 h-px bg-gray-200 dark:bg-white/10"></div>
               <span class="text-[10px] text-gray-400 dark:text-white/30 px-2 bg-gray-50 dark:bg-[#0f172a]">{{
@@ -352,7 +331,6 @@
               <div class="flex-1 h-px bg-gray-200 dark:bg-white/10"></div>
             </div>
 
-            <!-- Bot message bubble -->
             <div class="flex gap-2 items-end">
               <div
                 class="flex-shrink-0 flex h-7 w-7 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 ring-1 ring-green-200 dark:ring-green-700">
@@ -369,7 +347,6 @@
             </div>
           </div>
 
-          <!-- Chat footer -->
           <div class="flex-shrink-0 border-t border-gray-200 dark:border-gray-700 px-4 py-3 bg-white dark:bg-[#1e293b]">
             <div
               class="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-white/5 px-3 py-2">
@@ -381,7 +358,6 @@
         </div>
       </div>
     </transition>
-    <!-- ===== END ADMIN CHAT MODAL ===== -->
   </div>
 </template>
 
@@ -409,7 +385,6 @@ const profile = computed(() => profileStore.profile)
 const token = computed(() => profileStore.token)
 const roles = computed(() => profileStore.roles)
 
-// UI States
 const mobileMenuOpen = ref(false)
 const usersOpen = ref(false)
 const open = ref(false)
@@ -417,7 +392,6 @@ const userTriggerRef = ref(null)
 const dropdownRef = ref(null)
 const confirmModal = ref(null)
 
-// Notifications States
 const notificationsOpen = ref(false)
 const notifications = ref([])
 const isLoadingNotifications = ref(false)
@@ -428,7 +402,6 @@ const notificationDropdownRef = ref(null)
 const headerSearchQuery = ref('')
 provide('reservationsSearchQuery', headerSearchQuery)
 
-// Time
 const now = ref(new Date())
 const currentTime = computed(() => formatTime(now.value))
 const currentDate = computed(() => formatDate(now.value))
@@ -439,7 +412,6 @@ const currentPageTitle = computed(() => {
   return segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ')
 })
 
-// ==================== NOTIFICATIONS LOGIC ====================
 const fetchNotifications = async (silent = false) => {
   if (!silent) isLoadingNotifications.value = true
   try {
@@ -488,7 +460,6 @@ const relativeTime = (dateStr) => {
   return new Date(dateStr).toLocaleDateString()
 }
 
-// ==================== ADMIN CHAT MODAL ====================
 const adminChatOpen = ref(false)
 const adminChatMessage = ref(null)
 
@@ -510,7 +481,6 @@ const openAdminChat = async (notif) => {
   adminChatMessage.value = notif
   adminChatOpen.value = true
   notificationsOpen.value = false
-  // Mark as read on the server too
   if (!notif.is_read) {
     try {
       await request(`/notifications/${notif.id}/mark-read`, 'POST')
@@ -523,9 +493,7 @@ const closeAdminChat = () => {
   adminChatOpen.value = false
   adminChatMessage.value = null
 }
-// ==================== END ADMIN CHAT MODAL ====================
 
-// ==================== HELP PANEL ====================
 const helpOpen = ref(false)
 const helpTriggerRef = ref(null)
 const helpDropdownRef = ref(null)
@@ -561,11 +529,8 @@ const helpShortcuts = [
   { labelKey: 'toggle_sidebar', keys: ['Alt', 'S'] },
   { labelKey: 'logout', keys: ['Alt', 'Q'] },
 ]
-// ==================== END HELP PANEL ====================
 
-// ==================== MENU CONFIG & PERMISSION FILTER ====================
 
-// Menu configuration with router names
 const menuConfig = [
   { key: '/dashboard', label: 'Dashboard', icon: 'dashboard', name: 'Dashboard' },
   { key: '/reservations', label: 'Reservations', icon: 'calendar_month', name: 'Reservations' },
@@ -581,13 +546,11 @@ const menuConfig = [
   { key: '/settings', label: 'Settings', icon: 'settings', name: 'Settings' },
 ]
 
-// Get permissions from store
 const permissions = computed(() => {
   const perms = profileStore.permissions || []
   return Array.isArray(perms) ? perms : []
 })
 
-// Check if user can access a route
 const canAccessRoute = (routeName) => {
   if (!routeName) return false
 
@@ -618,7 +581,6 @@ const canAccessRoute = (routeName) => {
   return permissions.value.includes(requiredPermission)
 }
 
-// Filter allowed menu items
 const allowedMenuItems = computed(() => {
   const userRole = profile.value?.role || ''
   const isSuperAdmin = userRole === 'super-admin'
@@ -628,12 +590,10 @@ const allowedMenuItems = computed(() => {
   }
 
   return menuConfig.filter(item => {
-    // Check permission for other routes
     return canAccessRoute(item.name)
   })
 })
 
-// Build final menu structure
 const finalMenuLeft = computed(() => {
   const items = allowedMenuItems.value
 
@@ -643,7 +603,6 @@ const finalMenuLeft = computed(() => {
 
   const menu = [...mainItems]
 
-  // Add Users collapsible if any submenu exists
   if (userSubItems.length > 0) {
     menu.push({
       key: 'users-parent',
@@ -654,7 +613,6 @@ const finalMenuLeft = computed(() => {
     })
   }
 
-  // Add Settings at the bottom
   if (settingsItem) {
     menu.push(settingsItem)
   }
@@ -662,7 +620,6 @@ const finalMenuLeft = computed(() => {
   return menu
 })
 
-// ==================== END MENU LOGIC ====================
 
 const goTo = (path) => {
   open.value = false
@@ -686,7 +643,6 @@ const handleLogout = async () => {
 }
 
 const handleClickOutside = (event) => {
-  // Handle user profile dropdown click outside
   if (
     open.value &&
     dropdownRef.value &&
@@ -697,7 +653,6 @@ const handleClickOutside = (event) => {
     open.value = false
   }
 
-  // Handle notification dropdown click outside
   if (
     notificationsOpen.value &&
     notificationDropdownRef.value &&
@@ -708,7 +663,6 @@ const handleClickOutside = (event) => {
     notificationsOpen.value = false
   }
 
-  // Handle help dropdown click outside
   if (
     helpOpen.value &&
     helpDropdownRef.value &&
@@ -730,8 +684,7 @@ onMounted(() => {
     now.value = new Date()
   }, 60000)
 
-  // Live Sync Notifications via polling
-  fetchNotifications(true) // Initial fetch
+  fetchNotifications(true)
   const syncTimer = setInterval(() => {
     fetchNotifications(true)
   }, 10000)

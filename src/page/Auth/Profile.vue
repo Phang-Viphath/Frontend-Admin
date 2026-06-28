@@ -1,7 +1,6 @@
 <template>
   <div class="max-w-6xl mx-auto md:px-4 py-4">
     <div class="">
-      <!-- Loading -->
       <div v-if="loading" class="flex justify-center py-32">
         <div class="flex flex-col items-center gap-4">
           <div class="h-16 w-16 animate-spin rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 shadow-xl"></div>
@@ -9,7 +8,6 @@
         </div>
       </div>
 
-      <!-- Error -->
       <div v-else-if="error" class="max-w-md mx-auto text-center py-20">
         <div class="w-24 h-24 mx-auto mb-6 rounded-2xl bg-red-100 dark:bg-red-900/40 flex items-center justify-center">
           <span class="material-symbols-outlined text-4xl text-red-600 dark:text-red-400">error</span>
@@ -20,17 +18,13 @@
         </button>
       </div>
 
-      <!-- Profile Card -->
       <div v-else-if="profile" class="group">
         <div class="overflow-hidden rounded-3xl bg-white dark:bg-gray-800 shadow-xl border border-gray-200 dark:border-gray-700 max-w-5xl mx-auto">
-          <!-- Gradient Header -->
           <div class="h-36 bg-gradient-to-r from-green-600 via-green-500 to-emerald-600 relative overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
           </div>
 
-          <!-- Content -->
           <div class="relative px-5 md:px-8 pb-10 -mt-16">
-            <!-- Avatar Section -->
             <div class="flex justify-center lg:justify-start">
               <div class="relative group/avatar">
                 <div class="relative h-32 w-32 md:h-36 md:w-36 rounded-3xl ring-8 ring-white dark:ring-gray-800 shadow-2xl transition-all duration-500 hover:scale-105 border-4 border-white/50 overflow-hidden">
@@ -45,7 +39,6 @@
                     <span class="material-symbols-outlined text-5xl text-gray-400 dark:text-gray-500">account_circle</span>
                   </div>
 
-                  <!-- Hover Overlay -->
                   <div class="absolute inset-0 bg-black/50 rounded-3xl opacity-0 group-hover/avatar:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-3 backdrop-blur-sm">
                     <button
                       @click.stop="triggerAvatarUpload"
@@ -71,7 +64,6 @@
               </div>
             </div>
 
-            <!-- Profile Info -->
             <div class="mt-10 text-center lg:text-left lg:ml-4 lg:mt-0">
               <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
                 <div>
@@ -92,7 +84,6 @@
                 </div>
               </div>
 
-              <!-- Quick Stats -->
               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
                 <div class="text-center lg:text-left p-4 rounded-2xl bg-gray-50/50 dark:bg-gray-700/30 hover:bg-gray-100 dark:hover:bg-gray-600/30 transition-all">
                   <div class="text-2xl font-bold text-green-600 dark:text-green-400">{{ formatDate(profile.created_at) }}</div>
@@ -113,7 +104,6 @@
               </div>
             </div>
 
-            <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row flex-wrap gap-3 justify-center lg:justify-start mt-8">
               <button
                 @click="openEditModal"
@@ -143,11 +133,9 @@
         </div>
       </div>
 
-      <!-- Hidden File Input -->
       <input ref="avatarInput" type="file" accept="image/*" @change="handleAvatarUpload" class="hidden" />
     </div>
 
-    <!-- Edit Profile Modal -->
     <div v-if="showEditModal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" @click.self="closeEditModal">
       <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">{{ $t('edit_profile') }}</h2>
@@ -179,7 +167,6 @@
       </div>
     </div>
 
-    <!-- Change Password Modal -->
     <div v-if="showPasswordModal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50" @click.self="closePasswordModal">
       <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">{{ $t('change_password') }}</h2>
@@ -263,7 +250,6 @@ const roleLabel = computed(() => {
   return 'User'
 })
 
-// Image URL
 const profileImageUrl = computed(() => {
   return resolveImageUrl(profile.value?.profile?.image)
 })
@@ -402,5 +388,4 @@ const onLogout = async () => {
 onMounted(() => {
   fetchProfile()
 })
-// Trigger HMR
 </script>

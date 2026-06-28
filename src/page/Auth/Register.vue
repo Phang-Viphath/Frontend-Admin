@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 py-8">
-    <!-- Top-right Theme/Lang Actions -->
     <div class="absolute top-4 right-4 flex items-center gap-2">
       <button @click="languageStore.setLanguage(languageStore.locale === 'en' ? 'km' : 'en')"
         class="flex items-center justify-center h-10 px-3 rounded-lg text-sm font-semibold bg-green-600/10 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors uppercase">
@@ -18,19 +17,16 @@
       <div class="rounded-xl bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 p-6 md:p-8">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-6">{{ $t('register') }}</h2>
 
-        <!-- Error message -->
         <div v-if="errorMessage" class="mb-4 p-3 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 rounded-lg text-center text-sm">
           {{ errorMessage }}
         </div>
 
-        <!-- Success message -->
         <div v-if="successMessage" class="mb-4 p-3 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 rounded-lg text-center text-sm">
           {{ successMessage }}
         </div>
 
         <form @submit.prevent="onRegister" class="space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Name -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('name') }}</label>
               <div class="relative">
@@ -45,7 +41,6 @@
               </div>
             </div>
 
-            <!-- Email -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('email') }}</label>
               <div class="relative">
@@ -63,7 +58,6 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Password -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('password') }}</label>
               <div class="relative">
@@ -87,7 +81,6 @@
               </div>
             </div>
 
-            <!-- Confirm Password -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('confirm_password') }}</label>
               <div class="relative">
@@ -104,7 +97,6 @@
             </div>
           </div>
 
-          <!-- Profile Image -->
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('profile_image_optional') }}</label>
             <div class="flex items-center gap-4">
@@ -120,7 +112,6 @@
             </div>
           </div>
 
-          <!-- Phone & Address -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ $t('phone_optional') }}</label>

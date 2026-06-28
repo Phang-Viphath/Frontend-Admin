@@ -108,7 +108,6 @@ const loading = ref(false)
 const submitForm = async () => {
   loading.value = true
   try {
-    // Check if passwords match
     if (form.value.password !== form.value.password_confirmation) {
       showToast(t('passwords_do_not_match'), 'error')
       return
@@ -126,7 +125,6 @@ const submitForm = async () => {
     showToast(t('user_created_successfully'), 'success')
     emit('created')
     
-    // Reset form
     form.value = {
       name: '',
       email: '',

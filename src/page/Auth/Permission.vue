@@ -44,7 +44,6 @@
     </div>
 
     <div class="bg-white dark:bg-[#1e293b] rounded-xl border dark:border-gray-700 overflow-hidden">
-      <!-- Table Header (with inline loading state) -->
       <div v-if="isLoading" class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-end bg-gray-50/50 dark:bg-[#2d3b4e]/50">
         <span class="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
           <span class="material-symbols-outlined animate-spin text-[16px] text-blue-600">progress_activity</span>
@@ -65,7 +64,6 @@
             </tr>
           </thead>
           <tbody class="divide-y dark:divide-gray-700">
-            <!-- Skeleton Rows -->
             <template v-if="isLoading">
               <tr v-for="i in 5" :key="`sk-${i}`" class="animate-pulse bg-white dark:bg-[#1e293b]">
                 <td class="px-6 py-4"><div class="h-4 w-8 bg-gray-200 dark:bg-gray-700 rounded"></div></td>
@@ -82,7 +80,6 @@
               </tr>
             </template>
 
-            <!-- Actual Rows -->
             <template v-else>
               <tr
                 v-for="p in filteredPermissions"

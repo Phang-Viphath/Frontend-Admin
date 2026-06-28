@@ -1,6 +1,5 @@
 <template>
   <div class="space-y-6">
-    <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
         <div class="flex items-center gap-2">
@@ -10,7 +9,6 @@
       </div>
     </div>
 
-    <!-- Filters & Search -->
     <div class="rounded-xl bg-white dark:bg-[#1e293b] p-4 shadow-sm border border-gray-200 dark:border-gray-700">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="relative">
@@ -50,9 +48,7 @@
       </div>
     </div>
 
-    <!-- Historys Table -->
     <div class="rounded-xl bg-white dark:bg-[#1e293b] shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-      <!-- Table Header (with inline loading state) -->
       <div v-if="isLoading" class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-end bg-gray-50/50 dark:bg-gray-800/50">
         <span class="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
           <span class="material-symbols-outlined animate-spin text-[16px] text-blue-600">progress_activity</span>
@@ -74,7 +70,6 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-            <!-- Skeleton Rows -->
             <template v-if="isLoading">
               <tr v-for="i in 5" :key="`sk-${i}`" class="animate-pulse bg-white dark:bg-[#1e293b]">
                 <td class="px-6 py-4">
@@ -105,7 +100,6 @@
               </tr>
             </template>
 
-            <!-- No Data -->
             <tr v-else-if="paginatedHistorys.length === 0">
               <td colspan="7" class="px-6 py-12 text-center">
                 <div class="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
@@ -116,7 +110,6 @@
               </td>
             </tr>
 
-            <!-- Data Rows -->
             <template v-else>
               <tr
                 v-for="guest in paginatedHistorys"
@@ -217,7 +210,6 @@
         </table>
       </div>
 
-      <!-- Pagination -->
       <div
         v-if="!isLoading && filteredHistorys.length > 0"
         class="flex items-center justify-between px-6 py-4 border-t border-gray-200 dark:border-gray-700"
@@ -242,7 +234,6 @@
       </div>
     </div>
 
-    <!-- Confirmation Modal -->
     <ConfirmModalDelete
       ref="confirmDeleteModal"
       :title="$t('delete_history')"
@@ -267,7 +258,6 @@ const isSaving = ref(false)
 const deletingId = ref(null)
 const confirmDeleteModal = ref(null)
 
-// Create modal + supporting data
 const isCreateOpen = ref(false)
 const guests = ref([])
 const rooms = ref([])
@@ -324,11 +314,9 @@ const loadReservations = async () => {
   }
 }
 
-// Pagination
 const currentPage = ref(1)
 const itemsPerPage = ref(10)
 
-// Filters
 const searchQuery = ref('')
 const statusFilter = ref('all')
 const loyaltyFilter = ref('all')
@@ -345,20 +333,17 @@ const mapHistory = (h) => {
   const room = h.room || {}
   const reservation = h.reservation || {}
 
-  // Get avatar with fallback
   const resolvedAvatar = resolveImageUrl(guest.image)
   const avatar = resolvedAvatar
     ? resolvedAvatar
     : `https://ui-avatars.com/api/?name=${encodeURIComponent(guest.name || 'Guest')}&background=random`
 
-  // Determine loyalty level based on stays
   let loyalty = 'none'
   const totalStays = h.total_stays ?? 0
   if (totalStays >= 20) loyalty = 'platinum'
   else if (totalStays >= 10) loyalty = 'gold'
   else if (totalStays >= 5) loyalty = 'silver'
 
-  // Determine current stay status
   let status = 'past'
   let statusLabel = 'Past Guest'
   
@@ -370,7 +355,6 @@ const mapHistory = (h) => {
     statusLabel = 'Upcoming'
   }
 
-  // Add VIP status for platinum loyalty
   if (loyalty === 'platinum') {
     status = 'vip'
     statusLabel = 'VIP Guest'
@@ -426,7 +410,6 @@ const deleteHistory = async (history) => {
   }
 }
 
-// Computed filtered Historys with pagination
 const filteredHistorys = computed(() => {
   return Historys.value.filter(guest => {
     const q = (searchQuery.value || '').toLowerCase().trim()
@@ -463,7 +446,6 @@ const nextPage = () => {
   if (currentPage.value < totalPages.value) currentPage.value += 1
 }
 
-// Reset pagination when filters change
 watch([searchQuery, statusFilter, loyaltyFilter], () => {
   currentPage.value = 1
 })

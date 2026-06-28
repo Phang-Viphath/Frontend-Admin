@@ -1,6 +1,5 @@
 <template>
   <div class="space-y-6">
-    <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
         <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('reports_title') }}</h1>
@@ -39,7 +38,6 @@
       :monthly-summary="monthlySummary"
     />
 
-    <!-- KPI Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
@@ -90,9 +88,7 @@
       </div>
     </div>
 
-    <!-- Charts Section -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <!-- Occupancy & Revenue Trend -->
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between gap-3 mb-4">
           <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $t('occupancy_revenue_trend') }}</h2>
@@ -163,7 +159,6 @@
         </div>
       </div>
 
-      <!-- Revenue Sources Breakdown -->
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between gap-3 mb-4">
           <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $t('revenue_by_source') }}</h2>
@@ -237,7 +232,6 @@
       </div>
     </div>
 
-    <!-- Summary Table -->
     <div class="rounded-xl bg-white dark:bg-[#1e293b] shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
       <div class="p-6 border-b border-gray-200 dark:border-gray-700">
         <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $t('monthly_performance_summary') }}</h2>
@@ -297,7 +291,6 @@ import { ref, watch, computed } from 'vue'
 import request from '@/util/request'
 import ReportsPdfExporter from '@/components/reports/ReportsPdfExporter.vue'
 
-// Report period selector
 const reportPeriod = ref('month')
 
 const isLoading = ref(false)

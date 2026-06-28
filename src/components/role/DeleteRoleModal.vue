@@ -1,12 +1,9 @@
 <template>
   <div v-if="isOpen" class="fixed inset-0 z-50 overflow-y-auto">
-    <!-- Backdrop -->
     <div class="fixed inset-0 bg-black/50" @click="closeModal"></div>
     
-    <!-- Modal -->
     <div class="flex min-h-full items-center justify-center p-4">
       <div class="relative w-full max-w-md transform rounded-xl bg-white dark:bg-[#1e293b] shadow-xl transition-all">
-        <!-- Header -->
         <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-6 py-4">
           <div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -20,16 +17,13 @@
           </button>
         </div>
 
-        <!-- Content -->
         <div class="p-6">
-          <!-- Warning Icon -->
           <div class="flex justify-center mb-4">
             <div class="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
               <span class="material-symbols-outlined text-2xl text-red-600 dark:text-red-400">warning</span>
             </div>
           </div>
 
-          <!-- Message -->
           <div class="text-center mb-6">
             <p class="text-gray-700 dark:text-gray-300 mb-2">
               <span v-if="actionType === 'delete'" v-html="$t('delete_role_confirm', { role_name: role?.name })">
@@ -43,7 +37,6 @@
             </p>
           </div>
 
-          <!-- Action Buttons -->
           <div class="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
             <button
               type="button"

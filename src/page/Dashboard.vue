@@ -1,6 +1,5 @@
 <template>
   <div class="space-y-6">
-    <!-- Page Title -->
     <div class="flex items-center justify-between">
       <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ $t('dashboard') }}</h1>
       <div class="flex items-center gap-3">
@@ -18,15 +17,12 @@
       </div>
     </div>
 
-    <!-- Stats Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-      <!-- Revenue Card -->
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div class="flex-1 min-w-0">
             <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ $t('total_revenue') }}</p>
-            <!-- Skeleton -->
             <div v-if="isLoadingReports" class="mt-2 h-9 w-28 rounded-lg bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
             <p v-else class="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">${{ kpis.total_revenue }}</p>
             <div v-if="isLoadingReports" class="mt-2 h-3 w-40 rounded bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
@@ -38,7 +34,6 @@
         </div>
       </div>
 
-      <!-- Occupancy Card -->
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div class="flex-1 min-w-0">
@@ -54,7 +49,6 @@
         </div>
       </div>
 
-      <!-- Total Bookings Card -->
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div class="flex-1 min-w-0">
@@ -70,7 +64,6 @@
         </div>
       </div>
 
-      <!-- Available Rooms Card -->
       <div class="rounded-xl bg-white dark:bg-[#1e293b] p-6 shadow-sm border border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <div class="flex-1 min-w-0">
@@ -87,9 +80,7 @@
       </div>
     </div>
 
-    <!-- Charts and Table Section -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <!-- Recent Reservations Table -->
       <div class="lg:col-span-2 rounded-xl bg-white dark:bg-[#1e293b] shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
           <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ $t('recent_reservations') }}</h2>
@@ -111,7 +102,6 @@
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
 
-              <!-- Skeleton rows -->
               <template v-if="isLoadingReservations">
                 <tr v-for="i in 5" :key="`sk-${i}`" class="animate-pulse">
                   <td class="px-6 py-4">
@@ -127,7 +117,6 @@
                 </tr>
               </template>
 
-              <!-- Actual rows -->
               <tr
                 v-else
                 v-for="r in recentReservations"
@@ -155,7 +144,6 @@
                 </td>
               </tr>
 
-              <!-- Empty -->
               <tr v-if="!isLoadingReservations && !recentReservations.length">
                 <td colspan="5" class="px-6 py-10 text-center text-gray-400 dark:text-gray-500">
                   <div class="flex flex-col items-center gap-2">
@@ -168,11 +156,9 @@
         </div>
       </div>
 
-      <!-- Quick Room Status -->
       <div class="rounded-xl bg-white dark:bg-[#1e293b] shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">{{ $t('room_status_today') }}</h2>
 
-        <!-- Skeleton -->
         <div v-if="isLoadingRooms" class="space-y-4 animate-pulse">
           <div v-for="i in 5" :key="`rsk-${i}`" class="flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -185,7 +171,6 @@
           <div class="h-3 w-32 rounded bg-gray-200 dark:bg-gray-700 mt-4"></div>
         </div>
 
-        <!-- Actual Data -->
         <div v-else class="space-y-4">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -242,7 +227,6 @@ import userAvatar from '@/assets/user_avatar.png'
 
 const { t } = useI18n()
 
-// ── Loading states ──────────────────────────────────────────
 const isLoadingReports      = ref(false)
 const isLoadingReservations = ref(false)
 const isLoadingRooms        = ref(false)
@@ -250,7 +234,6 @@ const isRefreshing          = computed(() =>
   isLoadingReports.value || isLoadingReservations.value || isLoadingRooms.value
 )
 
-// ── Data ────────────────────────────────────────────────────
 const lastUpdated = ref(null)
 const kpis = ref({ occupancy_rate: 0, adr: 0, revpar: 0, total_revenue: 0 })
 const reservations = ref([])
@@ -281,7 +264,6 @@ const totalBookingsThisMonth = computed(() => {
 const roomCounts = computed(() => {
   const counts = { occupied: 0, reserved: 0, cleaning: 0, maintenance: 0, available: 0 }
   
-  // Get cleaning, maintenance, available from rooms
   const roomList = Array.isArray(rooms.value) ? rooms.value : []
   for (const room of roomList) {
     const s = String(room.status || '').toLowerCase()
@@ -290,7 +272,6 @@ const roomCounts = computed(() => {
     }
   }
 
-  // Get occupied and reserved from reservations
   const resList = Array.isArray(reservations.value) ? reservations.value : []
   for (const res of resList) {
     const s = String(res.status || '').toLowerCase().replace(/[- ]/g, '_')
@@ -306,7 +287,6 @@ const totalRooms = computed(() => {
   return list.length
 })
 
-// ── Helpers ─────────────────────────────────────────────────
 const getStatusLabel = (status) => {
   if (!status) return t('status_pending')
   const key = `status_${String(status).toLowerCase().replace(/[- ]/g, '_')}`
@@ -338,7 +318,6 @@ const statusBadgeClass = (status) => {
   return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
 }
 
-// ── Data fetching ────────────────────────────────────────────
 const loadReports = async (silent = false) => {
   if (!silent) isLoadingReports.value = true
   try {

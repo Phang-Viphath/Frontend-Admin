@@ -137,7 +137,6 @@ watch(() => props.user, (user) => {
 const submitForm = async () => {
   loading.value = true
   try {
-    // Check if passwords match when provided
     if (form.value.password && form.value.password !== form.value.password_confirmation) {
       showToast(t('passwords_do_not_match'), 'error')
       return
@@ -145,7 +144,6 @@ const submitForm = async () => {
     
     const data = { ...form.value }
     
-    // Remove password fields if empty
     if (!data.password) {
       delete data.password
       delete data.password_confirmation

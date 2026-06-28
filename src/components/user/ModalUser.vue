@@ -6,12 +6,9 @@
       @click.self="$emit('close')"
     >
       <div class="flex items-center justify-center min-h-screen p-4">
-        <!-- Overlay -->
         <div class="fixed inset-0 bg-black/50" />
 
-        <!-- Modal Container -->
         <div class="relative w-full max-w-lg bg-white dark:bg-gray-800 rounded-xl shadow-xl">
-          <!-- Header -->
           <div class="flex items-center justify-between p-6 border-b dark:border-gray-700">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
               {{ title }}
@@ -26,12 +23,10 @@
             </button>
           </div>
 
-          <!-- Content -->
           <div class="p-6">
             <slot />
           </div>
 
-          <!-- Footer (如果有的话) -->
           <div v-if="$slots.footer" class="p-6 border-t dark:border-gray-700">
             <slot name="footer" />
           </div>
